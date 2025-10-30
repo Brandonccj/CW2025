@@ -1,13 +1,9 @@
 package com.comp2042.game.control;
 
-import com.comp2042.game.event.DownData;
+import com.comp2042.game.event.*;
 import com.comp2042.game.ui.GameOverPanel;
 import com.comp2042.game.ui.NotificationPanel;
 import com.comp2042.game.ui.ViewData;
-import com.comp2042.game.event.EventSource;
-import com.comp2042.game.event.EventType;
-import com.comp2042.game.event.InputEventListener;
-import com.comp2042.game.event.MoveEvent;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
@@ -18,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Reflection;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -47,6 +44,12 @@ public class GuiController implements Initializable {
     @FXML
     private GameOverPanel gameOverPanel;
 
+    @FXML
+    private Label scoreLabel;
+
+    @FXML
+    private GridPane nextBrickGrid;
+
     private Rectangle[][] displayMatrix;
 
     private InputEventListener eventListener;
@@ -58,6 +61,8 @@ public class GuiController implements Initializable {
     private final BooleanProperty isPause = new SimpleBooleanProperty();
 
     private final BooleanProperty isGameOver = new SimpleBooleanProperty();
+
+    private Timeline instantDropTimeline;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -82,6 +87,10 @@ public class GuiController implements Initializable {
                     }
                     if (keyEvent.getCode() == KeyCode.DOWN || keyEvent.getCode() == KeyCode.S) {
                         moveDown(new MoveEvent(EventType.DOWN, EventSource.USER));
+                        keyEvent.consume();
+                    }
+                    if (keyEvent.getCode() == KeyCode.SPACE) {
+                        instantDrop();
                         keyEvent.consume();
                     }
                 }
@@ -128,6 +137,15 @@ public class GuiController implements Initializable {
         ));
         timeLine.setCycleCount(Timeline.INDEFINITE);
         timeLine.play();
+
+        nextBrickGrid.getChildren().clear();
+        for (int r = 0; r < 4; r++) {
+            for (int c = 0; c < 4; c++) {
+                Rectangle rec = new Rectangle(BRICK_SIZE, BRICK_SIZE);
+                rec.setFill(Color.TRANSPARENT);
+                nextBrickGrid.add(rec, c, r);
+            }
+        }
     }
 
     private Paint getFillColor(int i) {
@@ -175,6 +193,14 @@ public class GuiController implements Initializable {
                 }
             }
         }
+
+        int[][] next = brick.getNextBrickData();
+        for (int r = 0; r < next.length; r++) {
+            for (int c = 0; c < next[r].length; c++) {
+                Rectangle cell = (Rectangle) nextBrickGrid.getChildren().get(r * 4 + c);
+                cell.setFill(getFillColor(next[r][c]));
+            }
+        }
     }
 
     public void refreshGameBackground(int[][] board) {
@@ -191,14 +217,18 @@ public class GuiController implements Initializable {
         rectangle.setArcWidth(9);
     }
 
+    private void showClearRowNotification(ClearRow clearRow) {
+        if (clearRow != null && clearRow.getLinesRemoved() > 0) {
+            NotificationPanel notificationPanel = new NotificationPanel("+" + clearRow.getScoreBonus());
+            groupNotification.getChildren().add(notificationPanel);
+            notificationPanel.showScore(groupNotification.getChildren());
+        }
+    }
+
     private void moveDown(MoveEvent event) {
         if (isPause.getValue() == Boolean.FALSE) {
             DownData downData = eventListener.onDownEvent(event);
-            if (downData.getClearRow() != null && downData.getClearRow().getLinesRemoved() > 0) {
-                NotificationPanel notificationPanel = new NotificationPanel("+" + downData.getClearRow().getScoreBonus());
-                groupNotification.getChildren().add(notificationPanel);
-                notificationPanel.showScore(groupNotification.getChildren());
-            }
+            showClearRowNotification(downData.getClearRow()); // Use the method here
             refreshBrick(downData.getViewData());
         }
         gamePanel.requestFocus();
@@ -209,12 +239,14 @@ public class GuiController implements Initializable {
     }
 
     public void bindScore(IntegerProperty integerProperty) {
+        scoreLabel.textProperty().bind(integerProperty.asString("Score: %d"));
     }
 
     public void gameOver() {
         timeLine.stop();
         gameOverPanel.setVisible(true);
         isGameOver.setValue(Boolean.TRUE);
+        if (instantDropTimeline != null) instantDropTimeline.stop();
     }
 
     public void newGame(ActionEvent actionEvent) {
@@ -225,9 +257,33 @@ public class GuiController implements Initializable {
         timeLine.play();
         isPause.setValue(Boolean.FALSE);
         isGameOver.setValue(Boolean.FALSE);
+        if (instantDropTimeline != null) instantDropTimeline.stop();
     }
 
     public void pauseGame(ActionEvent actionEvent) {
         gamePanel.requestFocus();
     }
+    private void instantDrop() {
+        if (isPause.getValue() || isGameOver.getValue()) return;
+
+        if (instantDropTimeline != null) instantDropTimeline.stop();
+
+        instantDropTimeline = new Timeline(
+                new KeyFrame(Duration.millis(1), ae -> {
+                    DownData down = eventListener.onDownEvent(
+                            new MoveEvent(EventType.DOWN, EventSource.USER));
+                    refreshBrick(down.getViewData());
+
+                    showClearRowNotification(down.getClearRow()); // Use the method here
+
+                    if (down.getClearRow() != null) {
+                        instantDropTimeline.stop();
+                    }
+                })
+        );
+        instantDropTimeline.setCycleCount(Timeline.INDEFINITE);
+        instantDropTimeline.play();
+    }
 }
+
+

@@ -4,8 +4,8 @@
 
 .nextBrick {
     -fx-border-width: 2px;
-    -fx-border-color: whitesmoke;
-    -fx-border-radius: 17px;
+    -fx-border-color: #26A8B7;
+    -fx-border-radius: 25px;
 }
 
 .gameBoard {
@@ -66,7 +66,7 @@
 
 .scoreClass{
     -fx-font-family: "Let's go Digital";
-    -fx-font-size: 38;
+    -fx-font-size: 30;
     -fx-fill: yellow;
     -fx-text-fill: yellow;
 }
