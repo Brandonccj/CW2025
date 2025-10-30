@@ -76,13 +76,27 @@ public class SimpleBoard implements Board {
     public boolean rotateLeftBrick() {
         int[][] currentMatrix = MatrixOperations.copy(currentGameMatrix);
         NextShapeInfo nextShape = brickRotator.getNextShape();
-        boolean conflict = MatrixOperations.intersect(currentMatrix, nextShape.getShape(), (int) currentOffset.getX(), (int) currentOffset.getY());
-        if (conflict) {
-            return false;
-        } else {
-            brickRotator.setCurrentShape(nextShape.getPosition());
-            return true;
+
+        Point originalOffset = new Point(currentOffset);
+
+        int[] kicks = {0, -1, 1, -2, 2, -3, 3};
+
+        for (int dx : kicks) {
+            Point kicked = new Point(originalOffset);
+            kicked.translate(dx, 0);
+
+            boolean conflict = MatrixOperations.intersect(currentMatrix,
+                    nextShape.getShape(),
+                    (int) kicked.getX(),
+                    (int) kicked.getY());
+            if (!conflict) {
+                currentOffset = kicked;
+                brickRotator.setCurrentShape(nextShape.getPosition());
+                return true;
+            }
         }
+
+        return false;
     }
 
     @Override
@@ -100,7 +114,11 @@ public class SimpleBoard implements Board {
 
     @Override
     public ViewData getViewData() {
-        return new ViewData(brickRotator.getCurrentShape(), (int) currentOffset.getX(), (int) currentOffset.getY(), brickGenerator.getNextBrick().getShapeMatrix().get(0));
+        return new ViewData(brickRotator.getCurrentShape(),
+                (int) currentOffset.getX(),
+                (int) currentOffset.getY(),
+                brickGenerator.getNextBrick().getShapeMatrix().get(0),
+                dropDistance());
     }
 
     @Override
@@ -127,5 +145,17 @@ public class SimpleBoard implements Board {
         currentGameMatrix = new int[width][height];
         score.reset();
         createNewBrick();
+    }
+
+    public int dropDistance() {
+        int[][] matrix = MatrixOperations.copy(currentGameMatrix);
+        int[][] shape  = brickRotator.getCurrentShape();
+        int dist = 0;
+        while (!MatrixOperations.intersect(matrix, shape,
+                (int) currentOffset.getX(),
+                (int) currentOffset.getY() + dist + 1)) {
+            dist++;
+        }
+        return dist;
     }
 }

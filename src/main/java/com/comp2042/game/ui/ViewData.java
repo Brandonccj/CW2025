@@ -8,12 +8,18 @@ public final class ViewData {
     private final int xPosition;
     private final int yPosition;
     private final int[][] nextBrickData;
+    private final int dropDistance;
 
-    public ViewData(int[][] brickData, int xPosition, int yPosition, int[][] nextBrickData) {
+    public ViewData(int[][] brickData, int xPosition, int yPosition, int[][] nextBrickData,int dropDistance) {
         this.brickData = brickData;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.nextBrickData = nextBrickData;
+        this.dropDistance = dropDistance;
+    }
+
+    public int getDropDistance() {
+        return dropDistance;
     }
 
     public int[][] getBrickData() {

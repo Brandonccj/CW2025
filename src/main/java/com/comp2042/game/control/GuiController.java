@@ -26,6 +26,8 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class GuiController implements Initializable {
@@ -63,6 +65,8 @@ public class GuiController implements Initializable {
     private final BooleanProperty isGameOver = new SimpleBooleanProperty();
 
     private Timeline instantDropTimeline;
+
+    private final List<Rectangle> ghostNodes = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -184,6 +188,7 @@ public class GuiController implements Initializable {
 
 
     private void refreshBrick(ViewData brick) {
+        clearGhosts();
         if (isPause.getValue() == Boolean.FALSE) {
             brickPanel.setLayoutX(gamePanel.getLayoutX() + brick.getxPosition() * brickPanel.getVgap() + brick.getxPosition() * BRICK_SIZE);
             brickPanel.setLayoutY(-42 + gamePanel.getLayoutY() + brick.getyPosition() * brickPanel.getHgap() + brick.getyPosition() * BRICK_SIZE);
@@ -199,6 +204,27 @@ public class GuiController implements Initializable {
             for (int c = 0; c < next[r].length; c++) {
                 Rectangle cell = (Rectangle) nextBrickGrid.getChildren().get(r * 4 + c);
                 cell.setFill(getFillColor(next[r][c]));
+            }
+        }
+        int drop = brick.getDropDistance();
+        int[][] shape = brick.getBrickData();
+        for (int r = 0; r < shape.length; r++) {
+            for (int c = 0; c < shape[0].length; c++) {
+                if (shape[r][c] != 0) {
+                    Rectangle ghost = new Rectangle(BRICK_SIZE, BRICK_SIZE);
+                    ghost.setFill(getGhostColor(shape[r][c]));
+                    ghost.setArcHeight(9);
+                    ghost.setArcWidth(9);
+                    ghost.setOpacity(0.35);
+
+                    /* row in the GRID =  current brick row + drop distance  */
+                    int targetRow = brick.getyPosition() + r + drop;
+                    /* skip if it would fall outside the visible rows */
+                    if (targetRow < 2 || targetRow >= 25) continue;
+
+                    gamePanel.add(ghost, brick.getxPosition() + c, targetRow - 2);
+                    ghostNodes.add(ghost);
+                }
             }
         }
     }
@@ -283,6 +309,25 @@ public class GuiController implements Initializable {
         );
         instantDropTimeline.setCycleCount(Timeline.INDEFINITE);
         instantDropTimeline.play();
+    }
+
+    private Paint getGhostColor(int colorCode) {
+        switch (colorCode) {
+            case 0: return Color.TRANSPARENT;
+            case 1: return Color.DARKBLUE;
+            case 2: return Color.PURPLE.darker();
+            case 3: return Color.DARKGREEN.darker();
+            case 4: return Color.GOLDENROD;
+            case 5: return Color.DARKRED;
+            case 6: return Color.BEIGE.darker();
+            case 7: return Color.BURLYWOOD.darker();
+            default: return Color.GRAY;
+        }
+    }
+
+    private void clearGhosts() {
+        ghostNodes.forEach(g -> gamePanel.getChildren().remove(g));
+        ghostNodes.clear();
     }
 }
 
