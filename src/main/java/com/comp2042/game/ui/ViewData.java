@@ -2,19 +2,22 @@ package com.comp2042.game.ui;
 
 import com.comp2042.game.control.MatrixOperations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class ViewData {
 
     private final int[][] brickData;
     private final int xPosition;
     private final int yPosition;
-    private final int[][] nextBrickData;
+    private final List<int[][]> nextBricksData;
     private final int dropDistance;
 
-    public ViewData(int[][] brickData, int xPosition, int yPosition, int[][] nextBrickData,int dropDistance) {
+    public ViewData(int[][] brickData, int xPosition, int yPosition, List<int[][]> nextBrickData,int dropDistance) {
         this.brickData = brickData;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
-        this.nextBrickData = nextBrickData;
+        this.nextBricksData = nextBrickData;
         this.dropDistance = dropDistance;
     }
 
@@ -34,7 +37,11 @@ public final class ViewData {
         return yPosition;
     }
 
-    public int[][] getNextBrickData() {
-        return MatrixOperations.copy(nextBrickData);
+    public List<int[][]> getNextBricksData() {
+        List<int[][]> copy = new ArrayList<>();
+        for (int[][] brick : nextBricksData) {
+            copy.add(MatrixOperations.copy(brick));
+        }
+        return copy;
     }
 }

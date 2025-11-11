@@ -9,6 +9,8 @@ import com.comp2042.logic.bricks.BrickGenerator;
 import com.comp2042.logic.bricks.RandomBrickGenerator;
 
 import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class SimpleBoard implements Board {
 
@@ -114,11 +116,20 @@ public class SimpleBoard implements Board {
 
     @Override
     public ViewData getViewData() {
-        return new ViewData(brickRotator.getCurrentShape(),
+        List<Brick> upcomingBricks = brickGenerator.getNextBricks(3);
+        List<int[][]> nextBricksData = new ArrayList<>();
+
+        for (Brick brick : upcomingBricks) {
+            nextBricksData.add(brick.getShapeMatrix().get(0));
+        }
+
+        return new ViewData(
+                brickRotator.getCurrentShape(),
                 (int) currentOffset.getX(),
                 (int) currentOffset.getY(),
-                brickGenerator.getNextBrick().getShapeMatrix().get(0),
-                dropDistance());
+                nextBricksData,
+                dropDistance()
+        );
     }
 
     @Override

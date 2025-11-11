@@ -24,6 +24,7 @@
         <URL value="@window_style.css"/>
     </stylesheets>
     <Label fx:id="scoreLabel" text="Score: 0" styleClass="scoreClass" layoutX="240" layoutY="10"/>
-    <GridPane fx:id="nextBrickGrid" layoutX="240" layoutY="400" hgap="1" vgap="1" styleClass="nextBrick" prefWidth="100" prefHeight="100"/>
-    <Label text="Next Brick:" styleClass="nextBrickLabel" layoutX="250" layoutY="350"/>
+    <Label text="Next Brick:" styleClass="nextBrickLabel" layoutX="240" layoutY="40"/>
+    <GridPane fx:id="nextBrickGrid" layoutX="240" layoutY="80" hgap="1" vgap="2"
+              styleClass="nextBrick" prefWidth="100" prefHeight="340"/>
 </Pane>

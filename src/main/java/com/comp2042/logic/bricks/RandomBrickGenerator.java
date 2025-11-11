@@ -40,10 +40,18 @@ public class RandomBrickGenerator implements BrickGenerator {
     }
 
     @Override
-    public Brick getNextBrick() {
-        if (nextBricks.isEmpty()) {
+    public List<Brick> getNextBricks(int count) {
+        while (nextBricks.size() < count) {
             fillBag();
         }
-        return nextBricks.peek();
+
+        List<Brick> upcomingBricks = new ArrayList<>();
+        int i = 0;
+        for (Brick brick : nextBricks) {
+            if (i >= count) break;
+            upcomingBricks.add(brick);
+            i++;
+        }
+        return upcomingBricks;
     }
 }

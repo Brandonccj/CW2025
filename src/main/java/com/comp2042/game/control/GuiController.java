@@ -22,9 +22,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -136,18 +136,22 @@ public class GuiController implements Initializable {
 
 
         timeLine = new Timeline(new KeyFrame(
-                Duration.millis(400),
+                Duration.millis(600),
                 ae -> moveDown(new MoveEvent(EventType.DOWN, EventSource.THREAD))
         ));
         timeLine.setCycleCount(Timeline.INDEFINITE);
         timeLine.play();
 
+        initPreviewGrid();
+    }
+
+    private void initPreviewGrid() {
         nextBrickGrid.getChildren().clear();
-        for (int r = 0; r < 4; r++) {
-            for (int c = 0; c < 4; c++) {
+        for (int row = 0; row < 14; row++) {
+            for (int col = 0; col < 4; col++) {
                 Rectangle rec = new Rectangle(BRICK_SIZE, BRICK_SIZE);
                 rec.setFill(Color.TRANSPARENT);
-                nextBrickGrid.add(rec, c, r);
+                nextBrickGrid.add(rec, col, row);
             }
         }
     }
@@ -199,13 +203,8 @@ public class GuiController implements Initializable {
             }
         }
 
-        int[][] next = brick.getNextBrickData();
-        for (int r = 0; r < next.length; r++) {
-            for (int c = 0; c < next[r].length; c++) {
-                Rectangle cell = (Rectangle) nextBrickGrid.getChildren().get(r * 4 + c);
-                cell.setFill(getFillColor(next[r][c]));
-            }
-        }
+        List<int[][]> nextBricks = brick.getNextBricksData();
+        updatePreviewGrid(nextBricks);
         int drop = brick.getDropDistance();
         int[][] shape = brick.getBrickData();
         for (int r = 0; r < shape.length; r++) {
@@ -213,17 +212,37 @@ public class GuiController implements Initializable {
                 if (shape[r][c] != 0) {
                     Rectangle ghost = new Rectangle(BRICK_SIZE, BRICK_SIZE);
                     ghost.setFill(getGhostColor(shape[r][c]));
+                    ghost.setStroke(Color.WHITE);
+                    ghost.setStrokeWidth(1);
+                    ghost.setStrokeType(StrokeType.INSIDE);
                     ghost.setArcHeight(9);
                     ghost.setArcWidth(9);
                     ghost.setOpacity(0.35);
 
-                    /* row in the GRID =  current brick row + drop distance  */
                     int targetRow = brick.getyPosition() + r + drop;
-                    /* skip if it would fall outside the visible rows */
                     if (targetRow < 2 || targetRow >= 25) continue;
 
                     gamePanel.add(ghost, brick.getxPosition() + c, targetRow - 2);
                     ghostNodes.add(ghost);
+                }
+            }
+        }
+    }
+
+    private void updatePreviewGrid(List<int[][]> nextBricks) {
+        for (int brickIndex = 0; brickIndex < 3 && brickIndex < nextBricks.size(); brickIndex++) {
+            int[][] brickData = nextBricks.get(brickIndex);
+            for (int r = 0; r < 4; r++) {
+                for (int c = 0; c < 4; c++) {
+                    int gridIndex = (brickIndex * 5 + r) * 4 + c;
+                    if (gridIndex < nextBrickGrid.getChildren().size()) {
+                        Rectangle cell = (Rectangle) nextBrickGrid.getChildren().get(gridIndex);
+                        if (r < brickData.length && c < brickData[0].length) {
+                            cell.setFill(getFillColor(brickData[r][c]));
+                        } else {
+                            cell.setFill(Color.TRANSPARENT);
+                        }
+                    }
                 }
             }
         }
@@ -254,7 +273,7 @@ public class GuiController implements Initializable {
     private void moveDown(MoveEvent event) {
         if (isPause.getValue() == Boolean.FALSE) {
             DownData downData = eventListener.onDownEvent(event);
-            showClearRowNotification(downData.getClearRow()); // Use the method here
+            showClearRowNotification(downData.getClearRow());
             refreshBrick(downData.getViewData());
         }
         gamePanel.requestFocus();
