@@ -5,7 +5,15 @@
 .nextBrick {
     -fx-border-width: 2px;
     -fx-border-color: #26A8B7;
-    -fx-border-radius: 25px;
+    -fx-border-radius: 15px;
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+}
+
+.sideBrick {
+    -fx-border-width: 2px;
+    -fx-border-color: #26A8B7;
+    -fx-border-radius: 15px;
+    -fx-background-color: rgba(0, 0, 0, 0.3);
 }
 
 .gameBoard {
@@ -17,8 +25,15 @@
 .nextBrickLabel {
     -fx-font-family: "Let's go Digital";
     -fx-padding: 20px 0 0 0;
-    -fx-font-size: 16px;
-    -fx-text-fill: yellow;
+    -fx-text-fill: #26A8B7;
+    -fx-font-weight: bold;
+}
+
+.sideLabel {
+    -fx-font-family: "Let's go Digital";
+    -fx-font-size: 20px;
+    -fx-text-fill: Yellow;
+    -fx-font-weight: bold;
 }
 
 .ipad-dark-grey {
@@ -62,6 +77,9 @@
     -fx-font-family: "Let's go Digital";
     -fx-font-size: 48;
     -fx-background-color: red;
+    -fx-min-width: 230px;
+    -fx-pref-width: 230px;
+    -fx-alignment: center;
 }
 
 .scoreClass{

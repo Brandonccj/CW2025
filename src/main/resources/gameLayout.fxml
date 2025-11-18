@@ -6,25 +6,49 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 <?import java.net.URL?>
-<Pane fx:controller="com.comp2042.game.control.GuiController"
-      xmlns:fx="http://javafx.com/fxml">
-    <GridPane fx:id="brickPanel" vgap="1" hgap="1"/>
-    <BorderPane styleClass="gameBoard" fx:id="gameBoard">
-        <center>
-            <GridPane fx:id="gamePanel" hgap="1" vgap="1" layoutY="30" layoutX="40"/>
-        </center>
-    </BorderPane>
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.comp2042.game.control.GuiController"
+           alignment="CENTER"
+           styleClass="root">
 
-    <Group fx:id="groupNotification" layoutX="14" layoutY="203">
-        <VBox alignment="CENTER">
-            <GameOverPanel fx:id="gameOverPanel"/>
-        </VBox>
-    </Group>
     <stylesheets>
         <URL value="@window_style.css"/>
     </stylesheets>
-    <Label fx:id="scoreLabel" text="Score: 0" styleClass="scoreClass" layoutX="240" layoutY="10"/>
-    <Label text="Next Brick:" styleClass="nextBrickLabel" layoutX="240" layoutY="40"/>
-    <GridPane fx:id="nextBrickGrid" layoutX="240" layoutY="80" hgap="1" vgap="2"
-              styleClass="nextBrick" prefWidth="100" prefHeight="340"/>
-</Pane>
+
+    <Pane prefWidth="600" prefHeight="550"
+          minWidth="600" minHeight="550"
+          maxWidth="600" maxHeight="550">
+
+        <GridPane fx:id="brickPanel" vgap="1" hgap="1"/>
+
+        <VBox layoutX="50" layoutY="50" spacing="10" alignment="TOP_CENTER">
+            <Label text="Hold" styleClass="sideLabel"/>
+            <GridPane fx:id="heldBrickGrid" hgap="1" vgap="1"
+                      styleClass="sideBrick" prefWidth="90" prefHeight="90"/>
+        </VBox>
+
+        <BorderPane styleClass="gameBoard" fx:id="gameBoard"
+                    layoutX="180" layoutY="30">
+            <center>
+                <GridPane fx:id="gamePanel" hgap="1" vgap="1"/>
+            </center>
+        </BorderPane>
+
+        <Group fx:id="groupNotification" layoutX="180" layoutY="250">
+            <VBox alignment="CENTER" prefWidth="230">
+                <GameOverPanel fx:id="gameOverPanel"/>
+            </VBox>
+        </Group>
+
+        <VBox layoutX="450" layoutY="50" spacing="15" alignment="TOP_CENTER">
+            <Label fx:id="scoreLabel" text="Score: 0" styleClass="scoreClass"/>
+
+            <VBox spacing="10" alignment="TOP_CENTER">
+                <Label text="Next" styleClass="sideLabel"/>
+                <GridPane fx:id="nextBrickGrid" hgap="1" vgap="1"
+                          styleClass="sideBrick" prefWidth="110" prefHeight="320"/>
+            </VBox>
+        </VBox>
+
+    </Pane>
+</StackPane>

@@ -33,6 +33,8 @@ import java.util.ResourceBundle;
 public class GuiController implements Initializable {
 
     private static final int BRICK_SIZE = 20;
+    private static final int GAME_BOARD_OFFSET_X = 180;
+    private static final int GAME_BOARD_OFFSET_Y = 30;
 
     @FXML
     private GridPane gamePanel;
@@ -51,6 +53,9 @@ public class GuiController implements Initializable {
 
     @FXML
     private GridPane nextBrickGrid;
+
+    @FXML
+    private GridPane heldBrickGrid;
 
     private Rectangle[][] displayMatrix;
 
@@ -131,9 +136,7 @@ public class GuiController implements Initializable {
                 brickPanel.add(rectangle, j, i);
             }
         }
-        brickPanel.setLayoutX(gamePanel.getLayoutX() + brick.getxPosition() * brickPanel.getVgap() + brick.getxPosition() * BRICK_SIZE);
-        brickPanel.setLayoutY(-42 + gamePanel.getLayoutY() + brick.getyPosition() * brickPanel.getHgap() + brick.getyPosition() * BRICK_SIZE);
-
+        positionBrickPanel(brick);
 
         timeLine = new Timeline(new KeyFrame(
                 Duration.millis(600),
@@ -143,12 +146,57 @@ public class GuiController implements Initializable {
         timeLine.play();
 
         initPreviewGrid();
+        initHoldGrid();
+    }
+
+    private void initHoldGrid() {
+        heldBrickGrid.getChildren().clear();
+        for (int r = 0; r < 4; r++) {
+            for (int c = 0; c < 4; c++) {
+                Rectangle rec = new Rectangle(BRICK_SIZE, BRICK_SIZE);
+                rec.setFill(Color.TRANSPARENT);
+                heldBrickGrid.add(rec, c, r);
+            }
+        }
+    }
+    private void updateHoldGrid(int[][] heldBrick) {
+        for (int i = 0; i < heldBrickGrid.getChildren().size(); i++) {
+            Rectangle cell = (Rectangle) heldBrickGrid.getChildren().get(i);
+            cell.setFill(Color.TRANSPARENT);
+        }
+
+        if (heldBrick != null) {
+            int offsetX = (4 - heldBrick[0].length) / 2;
+            int offsetY = (4 - heldBrick.length) / 2;
+
+            for (int r = 0; r < heldBrick.length; r++) {
+                for (int c = 0; c < heldBrick[r].length; c++) {
+                    if (heldBrick[r][c] != 0) {
+                        int gridRow = r + offsetY;
+                        int gridCol = c + offsetX;
+                        int gridIndex = gridRow * 4 + gridCol;
+
+                        if (gridIndex < heldBrickGrid.getChildren().size()) {
+                            Rectangle cell = (Rectangle) heldBrickGrid.getChildren().get(gridIndex);
+                            cell.setFill(getFillColor(heldBrick[r][c]));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void positionBrickPanel(ViewData brick) {
+        double xPos = GAME_BOARD_OFFSET_X + 11.5 + brick.getxPosition() * (BRICK_SIZE + 1);
+        double yPos = GAME_BOARD_OFFSET_Y + brick.getyPosition() * (BRICK_SIZE + 1) - 34;
+        brickPanel.setLayoutX(xPos);
+        brickPanel.setLayoutY(yPos);
     }
 
     private void initPreviewGrid() {
         nextBrickGrid.getChildren().clear();
-        for (int row = 0; row < 14; row++) {
-            for (int col = 0; col < 4; col++) {
+        for (int row = 0; row < 15; row++) {
+            for (int col = 0; col < 5; col++) {
                 Rectangle rec = new Rectangle(BRICK_SIZE, BRICK_SIZE);
                 rec.setFill(Color.TRANSPARENT);
                 nextBrickGrid.add(rec, col, row);
@@ -194,8 +242,7 @@ public class GuiController implements Initializable {
     private void refreshBrick(ViewData brick) {
         clearGhosts();
         if (isPause.getValue() == Boolean.FALSE) {
-            brickPanel.setLayoutX(gamePanel.getLayoutX() + brick.getxPosition() * brickPanel.getVgap() + brick.getxPosition() * BRICK_SIZE);
-            brickPanel.setLayoutY(-42 + gamePanel.getLayoutY() + brick.getyPosition() * brickPanel.getHgap() + brick.getyPosition() * BRICK_SIZE);
+            positionBrickPanel(brick);
             for (int i = 0; i < brick.getBrickData().length; i++) {
                 for (int j = 0; j < brick.getBrickData()[i].length; j++) {
                     setRectangleData(brick.getBrickData()[i][j], rectangles[i][j]);
@@ -230,17 +277,41 @@ public class GuiController implements Initializable {
     }
 
     private void updatePreviewGrid(List<int[][]> nextBricks) {
-        for (int brickIndex = 0; brickIndex < 3 && brickIndex < nextBricks.size(); brickIndex++) {
+        for (javafx.scene.Node node : nextBrickGrid.getChildren()) {
+            ((Rectangle) node).setFill(Color.TRANSPARENT);
+        }
+
+        for (int brickIndex = 0; brickIndex < Math.min(3, nextBricks.size()); brickIndex++) {
             int[][] brickData = nextBricks.get(brickIndex);
+
+            int minRow = 4, maxRow = -1, minCol = 4, maxCol = -1;
             for (int r = 0; r < 4; r++) {
                 for (int c = 0; c < 4; c++) {
-                    int gridIndex = (brickIndex * 5 + r) * 4 + c;
-                    if (gridIndex < nextBrickGrid.getChildren().size()) {
-                        Rectangle cell = (Rectangle) nextBrickGrid.getChildren().get(gridIndex);
-                        if (r < brickData.length && c < brickData[0].length) {
+                    if (brickData[r][c] != 0) {
+                        minRow = Math.min(minRow, r);
+                        maxRow = Math.max(maxRow, r);
+                        minCol = Math.min(minCol, c);
+                        maxCol = Math.max(maxCol, c);
+                    }
+                }
+            }
+
+            if (maxRow < 0) continue;
+
+            int width = maxCol - minCol + 1;
+            int height = maxRow - minRow + 1;
+            int colOffset = (5 - width) / 2;
+            int rowOffset = (4 - height) / 2;
+
+            for (int r = minRow; r <= maxRow; r++) {
+                for (int c = minCol; c <= maxCol; c++) {
+                    if (brickData[r][c] != 0) {
+                        int displayRow = brickIndex * 5 + rowOffset + (r - minRow);
+                        int displayCol = colOffset + (c - minCol);
+
+                        Rectangle cell = getRectangleAt(nextBrickGrid, displayCol, displayRow);
+                        if (cell != null) {
                             cell.setFill(getFillColor(brickData[r][c]));
-                        } else {
-                            cell.setFill(Color.TRANSPARENT);
                         }
                     }
                 }
@@ -248,6 +319,17 @@ public class GuiController implements Initializable {
         }
     }
 
+    // Helper method to get rectangle at specific grid position
+    private Rectangle getRectangleAt(GridPane grid, int col, int row) {
+        for (javafx.scene.Node node : grid.getChildren()) {
+            Integer nodeCol = GridPane.getColumnIndex(node);
+            Integer nodeRow = GridPane.getRowIndex(node);
+            if (nodeCol != null && nodeRow != null && nodeCol == col && nodeRow == row) {
+                return (Rectangle) node;
+            }
+        }
+        return null;
+    }
     public void refreshGameBackground(int[][] board) {
         for (int i = 2; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
