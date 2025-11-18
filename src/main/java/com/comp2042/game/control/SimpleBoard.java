@@ -21,6 +21,8 @@ public class SimpleBoard implements Board {
     private int[][] currentGameMatrix;
     private Point currentOffset;
     private final Score score;
+    private Brick heldBrick = null;
+    private boolean hasSwapped = false;
 
     public SimpleBoard(int width, int height) {
         this.width = width;
@@ -106,6 +108,7 @@ public class SimpleBoard implements Board {
         Brick currentBrick = brickGenerator.getBrick();
         brickRotator.setBrick(currentBrick);
         currentOffset = new Point(3, 2);
+        hasSwapped = false;
         return MatrixOperations.intersect(currentGameMatrix, brickRotator.getCurrentShape(), (int) currentOffset.getX(), (int) currentOffset.getY());
     }
 
@@ -128,7 +131,8 @@ public class SimpleBoard implements Board {
                 (int) currentOffset.getX(),
                 (int) currentOffset.getY(),
                 nextBricksData,
-                dropDistance()
+                dropDistance(),
+                getHeldBrickData()
         );
     }
 
@@ -168,5 +172,42 @@ public class SimpleBoard implements Board {
             dist++;
         }
         return dist;
+    }
+
+    @Override
+    public boolean holdBrick() {
+        if (hasSwapped) {
+            return false;
+        }
+
+        Brick currentBrick = brickRotator.brick;
+
+        if (heldBrick == null) {
+            heldBrick = currentBrick;
+            createNewBrick();
+        } else {
+            Brick temp = heldBrick;
+            heldBrick = currentBrick;
+            brickRotator.setBrick(temp);
+            currentOffset = new Point(3, 2);
+
+            if (MatrixOperations.intersect(currentGameMatrix, brickRotator.getCurrentShape(),
+                    (int) currentOffset.getX(), (int) currentOffset.getY())) {
+                heldBrick = temp;
+                brickRotator.setBrick(currentBrick);
+                return false;
+            }
+        }
+
+        hasSwapped = true;
+        return true;
+    }
+
+    @Override
+    public int[][] getHeldBrickData() {
+        if (heldBrick == null) {
+            return null;
+        }
+        return heldBrick.getShapeMatrix().get(0);
     }
 }

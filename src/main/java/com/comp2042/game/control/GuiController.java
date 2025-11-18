@@ -102,6 +102,10 @@ public class GuiController implements Initializable {
                         instantDrop();
                         keyEvent.consume();
                     }
+                    if (keyEvent.getCode() == KeyCode.C) {
+                        refreshBrick(eventListener.onHoldEvent(new MoveEvent(EventType.ROTATE, EventSource.USER)));
+                        keyEvent.consume();
+                    }
                 }
                 if (keyEvent.getCode() == KeyCode.N) {
                     newGame(null);
@@ -252,6 +256,7 @@ public class GuiController implements Initializable {
 
         List<int[][]> nextBricks = brick.getNextBricksData();
         updatePreviewGrid(nextBricks);
+        updateHoldGrid(brick.getHeldBrickData());
         int drop = brick.getDropDistance();
         int[][] shape = brick.getBrickData();
         for (int r = 0; r < shape.length; r++) {
