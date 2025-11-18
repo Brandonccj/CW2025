@@ -2,6 +2,20 @@
     -fx-background-image: url("background_image.png");
 }
 
+.titleLabel {
+    -fx-font-family: "Let's go Digital";
+    -fx-font-size: 28px;
+    -fx-text-fill: #00FF00;
+    -fx-font-weight: bold;
+}
+
+.headerLabel {
+    -fx-font-family: "Let's go Digital";
+    -fx-font-size: 18px;
+    -fx-text-fill: yellow;
+    -fx-font-weight: bold;
+}
+
 .nextBrick {
     -fx-border-width: 2px;
     -fx-border-color: #26A8B7;

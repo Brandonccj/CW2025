@@ -57,6 +57,12 @@ public class GuiController implements Initializable {
     @FXML
     private GridPane heldBrickGrid;
 
+    @FXML
+    private Label timeLabel;
+
+    @FXML
+    private Label highScoreLabel;
+
     private Rectangle[][] displayMatrix;
 
     private InputEventListener eventListener;
@@ -72,6 +78,10 @@ public class GuiController implements Initializable {
     private Timeline instantDropTimeline;
 
     private final List<Rectangle> ghostNodes = new ArrayList<>();
+
+    private long startTime;
+    private Timeline timerTimeline;
+    private int highScore = HighScoreManager.loadHighScore();;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -151,6 +161,16 @@ public class GuiController implements Initializable {
 
         initPreviewGrid();
         initHoldGrid();
+
+        highScoreLabel.setText("High Score: " + highScore);
+
+        startTime = System.currentTimeMillis();
+        timerTimeline = new Timeline(new KeyFrame(
+                Duration.seconds(1),
+                ae -> updateTimer()
+        ));
+        timerTimeline.setCycleCount(Timeline.INDEFINITE);
+        timerTimeline.play();
     }
 
     private void initHoldGrid() {
@@ -192,7 +212,7 @@ public class GuiController implements Initializable {
 
     private void positionBrickPanel(ViewData brick) {
         double xPos = GAME_BOARD_OFFSET_X + 11.5 + brick.getxPosition() * (BRICK_SIZE + 1);
-        double yPos = GAME_BOARD_OFFSET_Y + brick.getyPosition() * (BRICK_SIZE + 1) - 34;
+        double yPos = GAME_BOARD_OFFSET_Y + brick.getyPosition() * (BRICK_SIZE + 1) - 4;
         brickPanel.setLayoutX(xPos);
         brickPanel.setLayoutY(yPos);
     }
@@ -372,13 +392,18 @@ public class GuiController implements Initializable {
 
     public void bindScore(IntegerProperty integerProperty) {
         scoreLabel.textProperty().bind(integerProperty.asString("Score: %d"));
+        integerProperty.addListener((obs, oldVal, newVal) -> {
+            updateHighScore(newVal.intValue());
+        });
     }
 
     public void gameOver() {
         timeLine.stop();
+        if (timerTimeline != null) timerTimeline.stop();
         gameOverPanel.setVisible(true);
         isGameOver.setValue(Boolean.TRUE);
         if (instantDropTimeline != null) instantDropTimeline.stop();
+        HighScoreManager.saveHighScore(highScore);
     }
 
     public void newGame(ActionEvent actionEvent) {
@@ -390,6 +415,8 @@ public class GuiController implements Initializable {
         isPause.setValue(Boolean.FALSE);
         isGameOver.setValue(Boolean.FALSE);
         if (instantDropTimeline != null) instantDropTimeline.stop();
+        startTime = System.currentTimeMillis();
+        if (timerTimeline != null) timerTimeline.play();
     }
 
     public void pauseGame(ActionEvent actionEvent) {
@@ -434,6 +461,21 @@ public class GuiController implements Initializable {
     private void clearGhosts() {
         ghostNodes.forEach(g -> gamePanel.getChildren().remove(g));
         ghostNodes.clear();
+    }
+
+    private void updateTimer() {
+        long elapsed = (System.currentTimeMillis() - startTime) / 1000;
+        long minutes = elapsed / 60;
+        long seconds = elapsed % 60;
+        timeLabel.setText(String.format("Time: %d:%02d", minutes, seconds));
+    }
+
+    private void updateHighScore(int currentScore) {
+        if (currentScore > highScore) {
+            highScore = currentScore;
+            highScoreLabel.setText("High Score: " + highScore);
+            HighScoreManager.saveHighScore(highScore);
+        }
     }
 }
 
