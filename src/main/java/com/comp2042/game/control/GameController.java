@@ -12,6 +12,8 @@ public class GameController implements InputEventListener {
     private Board board = new SimpleBoard(25, 10);
 
     private final GuiController viewGuiController;
+    private int currentLevel = 1;
+    private static final int LINES_PER_LEVEL = 5;
 
     public GameController(GuiController c) {
         viewGuiController = c;
@@ -19,6 +21,7 @@ public class GameController implements InputEventListener {
         viewGuiController.setEventListener(this);
         viewGuiController.initGameView(board.getBoardMatrix(), board.getViewData());
         viewGuiController.bindScore(board.getScore().scoreProperty());
+        viewGuiController.bindLines(board.getScore().linesClearedProperty());
     }
 
     @Override
@@ -30,7 +33,10 @@ public class GameController implements InputEventListener {
             clearRow = board.clearRows();
             if (clearRow.getLinesRemoved() > 0) {
                 board.getScore().add(clearRow.getScoreBonus());
+                board.getScore().addLines(clearRow.getLinesRemoved());
+                checkLevelUp();
             }
+
             if (board.createNewBrick()) {
                 viewGuiController.gameOver();
             }
@@ -43,6 +49,16 @@ public class GameController implements InputEventListener {
             }
         }
         return new DownData(clearRow, board.getViewData());
+    }
+
+    private void checkLevelUp() {
+        int totalLines = board.getScore().getLinesCleared();
+        int newLevel = (totalLines / LINES_PER_LEVEL) + 1;
+
+        if (newLevel > currentLevel) {
+            currentLevel = newLevel;
+            viewGuiController.levelUp(currentLevel);
+        }
     }
 
     @Override

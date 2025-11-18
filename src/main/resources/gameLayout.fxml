@@ -28,10 +28,22 @@
 
         <GridPane fx:id="brickPanel" vgap="1" hgap="1"/>
 
-        <VBox layoutX="50" layoutY="80" spacing="10" alignment="TOP_CENTER">
-            <Label text="Hold" styleClass="sideLabel"/>
-            <GridPane fx:id="heldBrickGrid" hgap="1" vgap="1"
-                      styleClass="sideBrick" prefWidth="90" prefHeight="90"/>
+        <VBox layoutX="50" layoutY="80" spacing="15" alignment="TOP_CENTER">
+            <VBox spacing="5" alignment="CENTER">
+                <Label text="Level" styleClass="sideLabel"/>
+                <Label fx:id="levelLabel" text="1" styleClass="levelNumber"/>
+            </VBox>
+
+            <VBox spacing="5" alignment="CENTER">
+                <Label text="Lines" styleClass="sideLabel"/>
+                <Label fx:id="linesLabel" text="0/5" styleClass="levelNumber"/>
+            </VBox>
+
+            <VBox spacing="10" alignment="TOP_CENTER">
+                <Label text="Hold" styleClass="sideLabel"/>
+                <GridPane fx:id="heldBrickGrid" hgap="1" vgap="1"
+                          styleClass="sideBrick" prefWidth="90" prefHeight="90"/>
+            </VBox>
         </VBox>
 
         <BorderPane styleClass="gameBoard" fx:id="gameBoard"
@@ -41,7 +53,7 @@
             </center>
         </BorderPane>
 
-        <Group fx:id="groupNotification" layoutX="180" layoutY="280">
+        <Group fx:id="groupNotification" layoutX="185" layoutY="280">
             <VBox alignment="CENTER" prefWidth="230">
                 <GameOverPanel fx:id="gameOverPanel"/>
             </VBox>

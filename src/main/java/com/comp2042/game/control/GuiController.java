@@ -63,6 +63,12 @@ public class GuiController implements Initializable {
     @FXML
     private Label highScoreLabel;
 
+    @FXML
+    private Label levelLabel;
+
+    @FXML
+    private Label linesLabel;
+
     private Rectangle[][] displayMatrix;
 
     private InputEventListener eventListener;
@@ -81,7 +87,10 @@ public class GuiController implements Initializable {
 
     private long startTime;
     private Timeline timerTimeline;
-    private int highScore = HighScoreManager.loadHighScore();;
+    private int highScore = HighScoreManager.loadHighScore();
+
+    private int currentLevel = 1;
+    private static final int BASE_SPEED = 600;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -408,13 +417,15 @@ public class GuiController implements Initializable {
 
     public void newGame(ActionEvent actionEvent) {
         timeLine.stop();
+        if (timerTimeline != null) timerTimeline.stop();
         gameOverPanel.setVisible(false);
         eventListener.createNewGame();
         gamePanel.requestFocus();
-        timeLine.play();
+
         isPause.setValue(Boolean.FALSE);
         isGameOver.setValue(Boolean.FALSE);
         if (instantDropTimeline != null) instantDropTimeline.stop();
+
         startTime = System.currentTimeMillis();
         if (timerTimeline != null) timerTimeline.play();
     }
@@ -476,6 +487,56 @@ public class GuiController implements Initializable {
             highScoreLabel.setText("High Score: " + highScore);
             HighScoreManager.saveHighScore(highScore);
         }
+    }
+
+    public void bindLines(IntegerProperty linesProperty) {
+        linesProperty.addListener((obs, oldVal, newVal) -> {
+            int totalLines = newVal.intValue();
+            int currentLevel = (totalLines / 5) + 1; // Current level
+            int targetLines = currentLevel * 5; // Target for current level
+            linesLabel.setText(totalLines + "/" + targetLines);
+        });
+    }
+
+    public void levelUp(int newLevel) {
+        currentLevel = newLevel;
+        levelLabel.setText(String.valueOf(newLevel));
+
+        // Calculate new speed: speed decreases as level increases
+        // Level 1: 600ms, Level 2: 540ms, Level 3: 486ms, etc.
+        int newSpeed = Math.max(100, (int)(BASE_SPEED * Math.pow(0.9, newLevel - 1)));
+
+        timeLine.stop();
+        timeLine = new Timeline(new KeyFrame(
+                Duration.millis(newSpeed),
+                ae -> moveDown(new MoveEvent(EventType.DOWN, EventSource.THREAD))
+        ));
+        timeLine.setCycleCount(Timeline.INDEFINITE);
+        timeLine.play();
+
+        Timeline delayTimeline = new Timeline(new KeyFrame(
+                Duration.millis(700),
+                ae -> {
+                    NotificationPanel levelUpNotif = new NotificationPanel("LEVEL " + newLevel + "!");
+                    groupNotification.getChildren().add(levelUpNotif);
+                    levelUpNotif.showScore(groupNotification.getChildren());
+                }
+        ));
+        delayTimeline.play();
+    }
+
+    public void resetLevel() {
+        currentLevel = 1;
+        levelLabel.setText("1");
+
+        // Reset speed to base speed
+        timeLine.stop();
+        timeLine = new Timeline(new KeyFrame(
+                Duration.millis(BASE_SPEED),
+                ae -> moveDown(new MoveEvent(EventType.DOWN, EventSource.THREAD))
+        ));
+        timeLine.setCycleCount(Timeline.INDEFINITE);
+        timeLine.play();
     }
 }
 
