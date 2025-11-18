@@ -3,15 +3,15 @@
 }
 
 .titleLabel {
-    -fx-font-family: "Let's go Digital";
-    -fx-font-size: 28px;
+    -fx-font-family: "Determination";
+    -fx-font-size: 22px;
     -fx-text-fill: #00FF00;
     -fx-font-weight: bold;
 }
 
 .headerLabel {
-    -fx-font-family: "Let's go Digital";
-    -fx-font-size: 16px;
+    -fx-font-family: "Determination";
+    -fx-font-size: 14px;
     -fx-text-fill: yellow;
     -fx-font-weight: bold;
 }
@@ -37,14 +37,14 @@
 }
 
 .nextBrickLabel {
-    -fx-font-family: "Let's go Digital";
+    -fx-font-family: "Determination";
     -fx-padding: 20px 0 0 0;
     -fx-text-fill: #26A8B7;
     -fx-font-weight: bold;
 }
 
 .sideLabel {
-    -fx-font-family: "Let's go Digital";
+    -fx-font-family: "Determination";
     -fx-font-size: 20px;
     -fx-text-fill: Yellow;
     -fx-font-weight: bold;
@@ -60,7 +60,7 @@
     -fx-background-radius: 9, 8, 5, 4, 3;
     -fx-padding: 8;
     /*-fx-font-family: "Helvetica";*/
-    -fx-font-family: "Let's go Digital";
+    -fx-font-family: "Determination";
     -fx-font-size: 22px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
@@ -90,7 +90,7 @@
 }
 
 .gameOverStyle {
-    -fx-font-family: "Let's go Digital";
+    -fx-font-family: "Determination";
     -fx-font-size: 48;
     -fx-background-color: red;
     -fx-min-width: 230px;
@@ -99,14 +99,14 @@
 }
 
 .scoreClass{
-    -fx-font-family: "Let's go Digital";
+    -fx-font-family: "Determination";
     -fx-font-size: 30;
     -fx-fill: yellow;
     -fx-text-fill: yellow;
 }
 
 .levelNumber {
-    -fx-font-family: "Let's go Digital";
+    -fx-font-family: "Determination";
     -fx-font-size: 32px;
     -fx-text-fill: #00FF00;
     -fx-font-weight: bold;

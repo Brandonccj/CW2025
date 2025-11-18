@@ -94,7 +94,7 @@ public class GuiController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Font.loadFont(getClass().getClassLoader().getResource("digital.ttf").toExternalForm(), 38);
+        Font.loadFont(getClass().getClassLoader().getResource("determination.ttf").toExternalForm(), 38);
         gamePanel.setFocusTraversable(true);
         gamePanel.requestFocus();
         gamePanel.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -416,18 +416,36 @@ public class GuiController implements Initializable {
     }
 
     public void newGame(ActionEvent actionEvent) {
-        timeLine.stop();
+        if (timeLine != null) timeLine.stop();
         if (timerTimeline != null) timerTimeline.stop();
-        gameOverPanel.setVisible(false);
-        eventListener.createNewGame();
-        gamePanel.requestFocus();
-
-        isPause.setValue(Boolean.FALSE);
-        isGameOver.setValue(Boolean.FALSE);
         if (instantDropTimeline != null) instantDropTimeline.stop();
 
+        gameOverPanel.setVisible(false);
+
+        isGameOver.setValue(Boolean.FALSE);
+        isPause.setValue(Boolean.FALSE);
+
+        eventListener.createNewGame();
+
+        ViewData viewData = eventListener.getViewData();
+        refreshBrick(viewData);
+
+        timeLine = new Timeline(new KeyFrame(
+                Duration.millis(BASE_SPEED),
+                ae -> moveDown(new MoveEvent(EventType.DOWN, EventSource.THREAD))
+        ));
+        timeLine.setCycleCount(Timeline.INDEFINITE);
+        timeLine.play();
+
         startTime = System.currentTimeMillis();
-        if (timerTimeline != null) timerTimeline.play();
+        timerTimeline = new Timeline(new KeyFrame(
+                Duration.seconds(1),
+                ae -> updateTimer()
+        ));
+        timerTimeline.setCycleCount(Timeline.INDEFINITE);
+        timerTimeline.play();
+
+        gamePanel.requestFocus();
     }
 
     public void pauseGame(ActionEvent actionEvent) {
