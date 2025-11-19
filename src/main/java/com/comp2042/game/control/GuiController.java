@@ -19,6 +19,7 @@ import javafx.scene.effect.Reflection;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -46,9 +47,6 @@ public class GuiController implements Initializable {
     private GridPane brickPanel;
 
     @FXML
-    private GameOverPanel gameOverPanel;
-
-    @FXML
     private Label scoreLabel;
 
     @FXML
@@ -68,6 +66,11 @@ public class GuiController implements Initializable {
 
     @FXML
     private Label linesLabel;
+
+    @FXML
+    private StackPane gameOverOverlay;
+
+    private GameOverPanel gameOverPanel;
 
     private Rectangle[][] displayMatrix;
 
@@ -95,6 +98,13 @@ public class GuiController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Font.loadFont(getClass().getClassLoader().getResource("determination.ttf").toExternalForm(), 38);
+        gameOverPanel = new GameOverPanel();
+        if (gameOverOverlay != null) {
+            gameOverOverlay.getChildren().clear();
+            gameOverOverlay.getChildren().add(gameOverPanel);
+            gameOverOverlay.setVisible(false);
+        }
+
         gamePanel.setFocusTraversable(true);
         gamePanel.requestFocus();
         gamePanel.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -409,18 +419,36 @@ public class GuiController implements Initializable {
     public void gameOver() {
         timeLine.stop();
         if (timerTimeline != null) timerTimeline.stop();
-        gameOverPanel.setVisible(true);
         isGameOver.setValue(Boolean.TRUE);
         if (instantDropTimeline != null) instantDropTimeline.stop();
-        HighScoreManager.saveHighScore(highScore);
-    }
 
+        long elapsed = (System.currentTimeMillis() - startTime) / 1000;
+        long minutes = elapsed / 60;
+        long seconds = elapsed % 60;
+        String timeString = String.format("%d:%02d", minutes, seconds);
+
+        String scoreText = scoreLabel.getText().replace("Score: ", "");
+        int currentScore = Integer.parseInt(scoreText);
+
+        String linesText = linesLabel.getText();
+        int totalLines = Integer.parseInt(linesText.split("/")[0]);
+
+        if (gameOverPanel != null) {
+            gameOverPanel.updateStats(timeString, currentScore, highScore, totalLines);
+            gameOverPanel.setVisible(true);
+        }
+
+        if (gameOverOverlay != null) {
+            gameOverOverlay.setVisible(true);
+            gameOverOverlay.toFront();
+        }
+    }
     public void newGame(ActionEvent actionEvent) {
         if (timeLine != null) timeLine.stop();
         if (timerTimeline != null) timerTimeline.stop();
         if (instantDropTimeline != null) instantDropTimeline.stop();
 
-        gameOverPanel.setVisible(false);
+        gameOverOverlay.setVisible(false);
 
         isGameOver.setValue(Boolean.FALSE);
         isPause.setValue(Boolean.FALSE);

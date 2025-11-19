@@ -89,13 +89,24 @@
     -fx-text-alignment: center;
 }
 
-.gameOverStyle {
+.gameOverTitle {
     -fx-font-family: "Determination";
-    -fx-font-size: 48;
-    -fx-background-color: red;
-    -fx-min-width: 230px;
-    -fx-pref-width: 230px;
-    -fx-alignment: center;
+    -fx-font-size: 48px;
+    -fx-text-fill: #FF0000;
+    -fx-font-weight: bold;
+}
+
+.gameOverStat {
+    -fx-font-family: "Determination";
+    -fx-font-size: 24px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.gameOverInstruction {
+    -fx-font-family: "Determination";
+    -fx-font-size: 16px;
+    -fx-text-fill: #00FF00;
+    -fx-padding: 20 0 0 0;
 }
 
 .scoreClass{

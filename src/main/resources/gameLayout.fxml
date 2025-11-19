@@ -53,12 +53,6 @@
             </center>
         </BorderPane>
 
-        <Group fx:id="groupNotification" layoutX="185" layoutY="280">
-            <VBox alignment="CENTER" prefWidth="230">
-                <GameOverPanel fx:id="gameOverPanel"/>
-            </VBox>
-        </Group>
-
         <VBox layoutX="450" layoutY="80" spacing="15" alignment="TOP_CENTER">
             <VBox spacing="10" alignment="TOP_CENTER">
                 <Label text="Next" styleClass="sideLabel"/>
@@ -67,6 +61,16 @@
             </VBox>
         </VBox>
 
+        <Group fx:id="groupNotification" layoutX="195" layoutY="280">
+            <VBox alignment="CENTER" prefWidth="230">
+            </VBox>
+        </Group>
+
     </Pane>
+
+    <StackPane fx:id="gameOverOverlay" visible="false"
+               style="-fx-background-color: rgba(50, 50, 50, 0.7);">
+        <GameOverPanel/>
+    </StackPane>
 
 </StackPane>
