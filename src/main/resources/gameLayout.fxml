@@ -35,7 +35,7 @@
 
             <VBox spacing="5" alignment="CENTER">
                 <Label text="Lines" styleClass="sideLabel"/>
-                <Label fx:id="linesLabel" text="0/5" styleClass="levelNumber"/>
+                <Label fx:id="linesLabel" text="0" styleClass="levelNumber"/>
             </VBox>
 
             <VBox spacing="10" alignment="TOP_CENTER">

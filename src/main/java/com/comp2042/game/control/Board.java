@@ -1,5 +1,6 @@
 package com.comp2042.game.control;
 
+import com.comp2042.game.event.GameMode;
 import com.comp2042.game.ui.Score;
 import com.comp2042.game.ui.ViewData;
 import com.comp2042.game.event.ClearRow;
@@ -31,4 +32,8 @@ public interface Board {
     boolean holdBrick();
 
     int[][] getHeldBrickData();
+
+    GameMode getGameMode();
+
+    void clearBoard();
 }

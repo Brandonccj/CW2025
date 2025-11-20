@@ -1,5 +1,6 @@
 package com.comp2042.game.control;
 
+import com.comp2042.game.event.GameMode;
 import com.comp2042.game.ui.NextShapeInfo;
 import com.comp2042.game.ui.Score;
 import com.comp2042.game.ui.ViewData;
@@ -23,16 +24,17 @@ public class SimpleBoard implements Board {
     private final Score score;
     private Brick heldBrick = null;
     private boolean hasSwapped = false;
+    private final GameMode gameMode;
 
-    public SimpleBoard(int width, int height) {
+    public SimpleBoard(int width, int height, GameMode mode) {
         this.width = width;
         this.height = height;
+        this.gameMode = mode;
         currentGameMatrix = new int[width][height];
         brickGenerator = new RandomBrickGenerator();
         brickRotator = new BrickRotator();
         score = new Score();
     }
-
     @Override
     public boolean moveBrickDown() {
         int[][] currentMatrix = MatrixOperations.copy(currentGameMatrix);
@@ -209,5 +211,15 @@ public class SimpleBoard implements Board {
             return null;
         }
         return heldBrick.getShapeMatrix().get(0);
+    }
+
+    @Override
+    public GameMode getGameMode() {
+        return gameMode;
+    }
+
+    @Override
+    public void clearBoard() {
+        currentGameMatrix = new int[width][height];
     }
 }

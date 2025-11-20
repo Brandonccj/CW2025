@@ -6,20 +6,23 @@ import com.comp2042.game.event.ClearRow;
 import com.comp2042.game.event.EventSource;
 import com.comp2042.game.event.InputEventListener;
 import com.comp2042.game.event.MoveEvent;
+import com.comp2042.game.event.GameMode;
 
 public class GameController implements InputEventListener {
 
-    private Board board = new SimpleBoard(25, 10);
-
+    private Board board;
     private final GuiController viewGuiController;
     private int currentLevel = 1;
     private static final int LINES_PER_LEVEL = 5;
+    private final GameMode gameMode;
 
-    public GameController(GuiController c) {
+    public GameController(GuiController c, GameMode mode) {
+        this.gameMode = mode;
+        this.board = new SimpleBoard(25, 10, mode);
         viewGuiController = c;
         board.createNewBrick();
         viewGuiController.setEventListener(this);
-        viewGuiController.initGameView(board.getBoardMatrix(), board.getViewData());
+        viewGuiController.initGameView(board.getBoardMatrix(), board.getViewData(), mode);
         viewGuiController.bindScore(board.getScore().scoreProperty());
         viewGuiController.bindLines(board.getScore().linesClearedProperty());
     }
@@ -33,17 +36,32 @@ public class GameController implements InputEventListener {
     public DownData onDownEvent(MoveEvent event) {
         boolean canMove = board.moveBrickDown();
         ClearRow clearRow = null;
+
         if (!canMove) {
             board.mergeBrickToBackground();
             clearRow = board.clearRows();
+
             if (clearRow.getLinesRemoved() > 0) {
                 board.getScore().add(clearRow.getScoreBonus());
                 board.getScore().addLines(clearRow.getLinesRemoved());
-                checkLevelUp();
+
+                // Only level up in Normal mode
+                if (gameMode == GameMode.NORMAL) {
+                    checkLevelUp();
+                }
             }
 
-            if (board.createNewBrick()) {
-                viewGuiController.gameOver();
+            boolean collision = board.createNewBrick();
+
+            if (collision) {
+                if (gameMode == GameMode.ZEN) {
+                    board.clearBoard();
+                    board.createNewBrick();
+                    viewGuiController.refreshGameBackground(board.getBoardMatrix());
+                    viewGuiController.showZenClearNotification();
+                } else {
+                    viewGuiController.gameOver();
+                }
             }
 
             viewGuiController.refreshGameBackground(board.getBoardMatrix());
@@ -93,6 +111,7 @@ public class GameController implements InputEventListener {
     @Override
     public void createNewGame() {
         board.newGame();
+        currentLevel = 1;
         viewGuiController.refreshGameBackground(board.getBoardMatrix());
     }
 }

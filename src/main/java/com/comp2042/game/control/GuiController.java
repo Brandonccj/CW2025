@@ -105,6 +105,9 @@ public class GuiController implements Initializable {
     private int currentLevel = 1;
     private static final int BASE_SPEED = 600;
 
+    private GameMode currentGameMode;
+    private Label gameModeLabel;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Font.loadFont(getClass().getClassLoader().getResource("determination.ttf").toExternalForm(), 38);
@@ -166,7 +169,22 @@ public class GuiController implements Initializable {
         reflection.setTopOffset(-12);
     }
 
-    public void initGameView(int[][] boardMatrix, ViewData brick) {
+    public void initGameView(int[][] boardMatrix, ViewData brick,GameMode mode) {
+        this.currentGameMode = mode;
+        gameModeLabel = new Label(mode == GameMode.ZEN ? "ZEN MODE" : "NORMAL MODE");
+        if (mode == GameMode.ZEN) {
+            gameModeLabel.setStyle("-fx-font-family: 'Determination'; -fx-font-size: 18px; -fx-text-fill: #26A8B7; -fx-font-weight: bold;");
+            highScoreLabel.setVisible(false);
+            linesLabel.setText("0");
+        } else {
+            gameModeLabel.setStyle("-fx-font-family: 'Determination'; -fx-font-size: 18px; -fx-text-fill: #00FF00; -fx-font-weight: bold;");
+            highScoreLabel.setText("High Score: " + highScore);
+            highScoreLabel.setVisible(true);
+            linesLabel.setText("0/5");
+        }
+        gameModeLabel.setLayoutX(270);
+        gameModeLabel.setLayoutY(35);
+        ((javafx.scene.layout.Pane) gamePanel.getParent()).getChildren().add(gameModeLabel);
         displayMatrix = new Rectangle[boardMatrix.length][boardMatrix[0].length];
         for (int i = 2; i < boardMatrix.length; i++) {
             for (int j = 0; j < boardMatrix[i].length; j++) {
@@ -221,6 +239,16 @@ public class GuiController implements Initializable {
         if (gameOverPanel != null) {
             gameOverPanel.getMainMenuButton().setOnAction(e -> returnToMainMenu());
         }
+        if (mode == GameMode.ZEN) {
+            levelLabel.setVisible(false);
+            levelLabel.getParent().setVisible(false);
+        }
+
+        if (mode == GameMode.NORMAL) {
+            highScoreLabel.setText("High Score: " + highScore);
+        } else {
+            highScoreLabel.setText("Best: N/A");
+        }
     }
 
     private void initHoldGrid() {
@@ -229,6 +257,8 @@ public class GuiController implements Initializable {
             for (int c = 0; c < 4; c++) {
                 Rectangle rec = new Rectangle(BRICK_SIZE, BRICK_SIZE);
                 rec.setFill(Color.TRANSPARENT);
+                rec.setArcWidth(9);
+                rec.setArcHeight(9);
                 heldBrickGrid.add(rec, c, r);
             }
         }
@@ -273,6 +303,8 @@ public class GuiController implements Initializable {
             for (int col = 0; col < 5; col++) {
                 Rectangle rec = new Rectangle(BRICK_SIZE, BRICK_SIZE);
                 rec.setFill(Color.TRANSPARENT);
+                rec.setArcWidth(9);
+                rec.setArcHeight(9);
                 nextBrickGrid.add(rec, col, row);
             }
         }
@@ -462,10 +494,17 @@ public class GuiController implements Initializable {
         int currentScore = Integer.parseInt(scoreText);
 
         String linesText = linesLabel.getText();
-        int totalLines = Integer.parseInt(linesText.split("/")[0]);
+        int totalLines;
+        if (currentGameMode == GameMode.ZEN) {
+            totalLines = Integer.parseInt(linesText);
+        } else {
+            totalLines = Integer.parseInt(linesText.split("/")[0]);
+        }
 
         if (gameOverPanel != null) {
-            gameOverPanel.updateStats(timeString, currentScore, highScore, totalLines);
+            // In Normal mode, show high score; in Zen mode, just show current stats
+            int displayHighScore = (currentGameMode == GameMode.NORMAL) ? highScore : currentScore;
+            gameOverPanel.updateStats(timeString, currentScore, displayHighScore, totalLines);
             gameOverPanel.setVisible(true);
         }
 
@@ -571,9 +610,15 @@ public class GuiController implements Initializable {
     public void bindLines(IntegerProperty linesProperty) {
         linesProperty.addListener((obs, oldVal, newVal) -> {
             int totalLines = newVal.intValue();
-            int currentLevel = (totalLines / 5) + 1; // Current level
-            int targetLines = currentLevel * 5; // Target for current level
-            linesLabel.setText(totalLines + "/" + targetLines);
+
+            if (currentGameMode == GameMode.ZEN) {
+                linesLabel.setText(String.valueOf(totalLines));
+            } else {
+                // Normal mode
+                int currentLevel = (totalLines / 5) + 1;
+                int targetLines = currentLevel * 5;
+                linesLabel.setText(totalLines + "/" + targetLines);
+            }
         });
     }
 
@@ -701,6 +746,13 @@ public class GuiController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void showZenClearNotification() {
+        NotificationPanel zenNotif = new NotificationPanel("BOARD CLEARED!");
+        javafx.scene.control.Label label = (javafx.scene.control.Label) zenNotif.getCenter();
+        label.setStyle("-fx-font-size: 26px; -fx-font-weight: bold;");
+        groupNotification.getChildren().add(zenNotif);
+        zenNotif.showScore(groupNotification.getChildren());
     }
 
 }
