@@ -1,11 +1,10 @@
-<?import com.comp2042.game.ui.GameOverPanel?>
-<?import javafx.scene.control.Button?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
 <?import java.net.URL?>
+
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.comp2042.game.control.GuiController"
            alignment="CENTER"
@@ -68,9 +67,12 @@
 
     </Pane>
 
+    <StackPane fx:id="pauseOverlay" visible="false"
+               style="-fx-background-color: rgba(50, 50, 50, 0.7);">
+    </StackPane>
+
     <StackPane fx:id="gameOverOverlay" visible="false"
                style="-fx-background-color: rgba(50, 50, 50, 0.7);">
-        <GameOverPanel/>
     </StackPane>
 
 </StackPane>

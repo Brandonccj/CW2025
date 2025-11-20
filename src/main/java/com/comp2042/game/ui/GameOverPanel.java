@@ -3,7 +3,9 @@ package com.comp2042.game.ui;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
@@ -14,14 +16,14 @@ public class GameOverPanel extends StackPane {
     private final Label scoreLabel;
     private final Label highScoreLabel;
     private final Label linesLabel;
+    private Button mainMenuButton;
 
     public GameOverPanel() {
-        // Set size explicitly
-        setPrefSize(350, 400);
-        setMinSize(350, 400);
-        setMaxSize(350, 400);
+        setPrefSize(350, 450);  // Increased height for button
+        setMinSize(350, 450);
+        setMaxSize(350, 450);
 
-        Rectangle background = new Rectangle(350, 400);
+        Rectangle background = new Rectangle(350, 450);
         background.setArcWidth(30);
         background.setArcHeight(30);
         background.setFill(Color.rgb(0, 0, 0, 0.85));
@@ -50,20 +52,23 @@ public class GameOverPanel extends StackPane {
         Label instructionLabel = new Label("Press N for New Game");
         instructionLabel.getStyleClass().add("gameOverInstruction");
 
+        mainMenuButton = new Button("MAIN MENU");
+        mainMenuButton.getStyleClass().add("gameOverButton");
+        mainMenuButton.setPrefWidth(200);
+
         content.getChildren().addAll(
                 gameOverLabel,
                 timeLabel,
                 scoreLabel,
                 highScoreLabel,
                 linesLabel,
-                instructionLabel
+                instructionLabel,
+                mainMenuButton
         );
 
         getChildren().addAll(background, content);
-
         setAlignment(Pos.CENTER);
         setVisible(true);
-
     }
 
     public void updateStats(String time, int score, int highScore, int lines) {
@@ -71,5 +76,9 @@ public class GameOverPanel extends StackPane {
         scoreLabel.setText("Score: " + score);
         highScoreLabel.setText("High Score: " + highScore);
         linesLabel.setText("Lines Cleared: " + lines);
+    }
+
+    public Button getMainMenuButton() {
+        return mainMenuButton;
     }
 }

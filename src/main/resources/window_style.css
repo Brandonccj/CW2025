@@ -109,6 +109,60 @@
     -fx-padding: 20 0 0 0;
 }
 
+.gameOverButton {
+    -fx-font-family: "Determination";
+    -fx-font-size: 18px;
+    -fx-background-color: rgba(38, 168, 183, 0.3);
+    -fx-text-fill: #26A8B7;
+    -fx-border-color: #26A8B7;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px;
+    -fx-cursor: hand;
+}
+
+.gameOverButton:hover {
+    -fx-background-color: rgba(38, 168, 183, 0.5);
+    -fx-text-fill: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(38, 168, 183, 0.8), 10, 0.5, 0, 0);
+}
+
+.pausePanel {
+    -fx-background-color: rgba(26, 26, 46, 0.95);
+    -fx-border-color: #FFFF00;
+    -fx-border-width: 3px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.6), 20, 0.5, 0, 0);
+}
+
+.pauseTitle {
+    -fx-font-family: "Determination";
+    -fx-font-size: 48px;
+    -fx-text-fill: #FFFF00;
+    -fx-font-weight: bold;
+}
+
+.pauseButton {
+    -fx-font-family: "Determination";
+    -fx-font-size: 20px;
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+    -fx-text-fill: white;
+    -fx-border-color: #FFFF00;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 12px;
+    -fx-cursor: hand;
+}
+
+.pauseButton:hover {
+    -fx-background-color: rgba(255, 255, 0, 0.3);
+    -fx-text-fill: #FFFF00;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 0, 0.8), 10, 0.5, 0, 0);
+}
+
 .scoreClass{
     -fx-font-family: "Determination";
     -fx-font-size: 30;

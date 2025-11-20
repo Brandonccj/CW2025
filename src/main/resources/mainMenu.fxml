@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import java.net.URL?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.comp2042.game.control.MenuController"
+           styleClass="menuRoot">
+
+    <stylesheets>
+        <URL value="@menu_style.css"/>
+    </stylesheets>
+
+    <VBox alignment="CENTER" spacing="30">
+        <padding>
+            <Insets top="50" bottom="50"/>
+        </padding>
+
+        <Label text="TetrisJFX" styleClass="menuTitle"/>
+
+        <VBox alignment="CENTER" spacing="15">
+            <Button text="NORMAL MODE" styleClass="menuButton, normalButton"
+                    onAction="#startNormalMode" prefWidth="250"/>
+
+            <Button text="ZEN MODE" styleClass="menuButton, zenButton"
+                    onAction="#startZenMode" prefWidth="250"/>
+
+            <Button text="INSTRUCTIONS" styleClass="menuButton, instructionsButton"
+                    onAction="#showInstructions" prefWidth="250"/>
+
+            <Button text="EXIT" styleClass="menuButton, exitButton"
+                    onAction="#exitGame" prefWidth="250"/>
+        </VBox>
+    </VBox>
+
+    <StackPane fx:id="instructionsOverlay" visible="false"
+               style="-fx-background-color: rgba(0, 0, 0, 0.85);">
+        <VBox alignment="CENTER" spacing="20" styleClass="instructionsPanel">
+            <padding>
+                <Insets top="40" right="40" bottom="40" left="40"/>
+            </padding>
+
+            <Label text="CONTROLS" styleClass="instructionsTitle"/>
+
+            <VBox spacing="12" alignment="CENTER_LEFT">
+                <Label text="← → or A D  -  Move Left/Right" styleClass="instructionsText"/>
+                <Label text="↑ or W  -  Rotate" styleClass="instructionsText"/>
+                <Label text="↓ or S  -  Soft Drop" styleClass="instructionsText"/>
+                <Label text="SPACE  -  Hard Drop" styleClass="instructionsText"/>
+                <Label text="C  -  Hold Piece" styleClass="instructionsText"/>
+                <Label text="P  -  Pause" styleClass="instructionsText"/>
+                <Label text="N  -  New Game" styleClass="instructionsText"/>
+            </VBox>
+
+            <Button text="BACK" styleClass="menuButton, backButton"
+                    onAction="#hideInstructions" prefWidth="200"/>
+        </VBox>
+    </StackPane>
+
+</StackPane>

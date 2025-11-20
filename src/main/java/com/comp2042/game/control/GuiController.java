@@ -30,6 +30,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import com.comp2042.game.ui.PauseMenu;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class GuiController implements Initializable {
 
@@ -69,6 +74,11 @@ public class GuiController implements Initializable {
 
     @FXML
     private StackPane gameOverOverlay;
+
+    @FXML
+    private StackPane pauseOverlay;
+
+    private PauseMenu pauseMenu;
 
     private GameOverPanel gameOverPanel;
 
@@ -110,6 +120,16 @@ public class GuiController implements Initializable {
         gamePanel.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.P) {
+                    togglePause();
+                    keyEvent.consume();
+                    return;
+                }
+                if (keyEvent.getCode() == KeyCode.N) {
+                    newGame(null);
+                    keyEvent.consume();
+                    return;
+                }
                 if (isPause.getValue() == Boolean.FALSE && isGameOver.getValue() == Boolean.FALSE) {
                     if (keyEvent.getCode() == KeyCode.LEFT || keyEvent.getCode() == KeyCode.A) {
                         refreshBrick(eventListener.onLeftEvent(new MoveEvent(EventType.LEFT, EventSource.USER)));
@@ -135,9 +155,6 @@ public class GuiController implements Initializable {
                         refreshBrick(eventListener.onHoldEvent(new MoveEvent(EventType.ROTATE, EventSource.USER)));
                         keyEvent.consume();
                     }
-                }
-                if (keyEvent.getCode() == KeyCode.N) {
-                    newGame(null);
                 }
             }
         });
@@ -190,6 +207,20 @@ public class GuiController implements Initializable {
         ));
         timerTimeline.setCycleCount(Timeline.INDEFINITE);
         timerTimeline.play();
+        pauseMenu = new PauseMenu();
+        if (pauseOverlay != null) {
+            pauseOverlay.getChildren().clear();
+            pauseOverlay.getChildren().add(pauseMenu);
+            pauseOverlay.setVisible(false);
+
+            pauseMenu.getResumeButton().setOnAction(e -> resumeGame());
+            pauseMenu.getRestartButton().setOnAction(e -> restartGame());
+            pauseMenu.getMainMenuButton().setOnAction(e -> returnToMainMenu());
+        }
+
+        if (gameOverPanel != null) {
+            gameOverPanel.getMainMenuButton().setOnAction(e -> returnToMainMenu());
+        }
     }
 
     private void initHoldGrid() {
@@ -448,10 +479,11 @@ public class GuiController implements Initializable {
         if (timerTimeline != null) timerTimeline.stop();
         if (instantDropTimeline != null) instantDropTimeline.stop();
 
-        gameOverOverlay.setVisible(false);
-
-        isGameOver.setValue(Boolean.FALSE);
+        if (pauseOverlay != null) pauseOverlay.setVisible(false);
         isPause.setValue(Boolean.FALSE);
+
+        gameOverOverlay.setVisible(false);
+        isGameOver.setValue(Boolean.FALSE);
 
         eventListener.createNewGame();
 
@@ -466,6 +498,7 @@ public class GuiController implements Initializable {
         timeLine.play();
 
         startTime = System.currentTimeMillis();
+        timeLabel.setText("Time: 0:00");
         timerTimeline = new Timeline(new KeyFrame(
                 Duration.seconds(1),
                 ae -> updateTimer()
@@ -584,6 +617,92 @@ public class GuiController implements Initializable {
         timeLine.setCycleCount(Timeline.INDEFINITE);
         timeLine.play();
     }
+    private void togglePause() {
+        if (isGameOver.getValue()) return;
+
+        if (isPause.getValue()) {
+            resumeGame();
+        } else {
+            pauseGame();
+        }
+    }
+
+    private void pauseGame() {
+        isPause.setValue(Boolean.TRUE);
+        timeLine.stop();
+        if (timerTimeline != null) timerTimeline.stop();
+        if (instantDropTimeline != null) instantDropTimeline.stop();
+
+        if (pauseOverlay != null) {
+            pauseOverlay.setVisible(true);
+            pauseOverlay.toFront();
+        }
+        gamePanel.requestFocus();
+    }
+
+    private void resumeGame() {
+        isPause.setValue(Boolean.FALSE);
+        timeLine.play();
+        if (timerTimeline != null) timerTimeline.play();
+
+        if (pauseOverlay != null) {
+            pauseOverlay.setVisible(false);
+        }
+
+        gamePanel.requestFocus();
+    }
+
+    private void restartGame() {
+        if (timeLine != null) timeLine.stop();
+        if (timerTimeline != null) timerTimeline.stop();
+        if (instantDropTimeline != null) instantDropTimeline.stop();
+
+        pauseOverlay.setVisible(false);
+
+        isPause.setValue(Boolean.FALSE);
+        isGameOver.setValue(Boolean.FALSE);
+
+        eventListener.createNewGame();
+        ViewData viewData = eventListener.getViewData();
+        refreshBrick(viewData);
+
+        timeLine = new Timeline(new KeyFrame(
+                Duration.millis(BASE_SPEED),
+                ae -> moveDown(new MoveEvent(EventType.DOWN, EventSource.THREAD))
+        ));
+        timeLine.setCycleCount(Timeline.INDEFINITE);
+        timeLine.play();
+
+        startTime = System.currentTimeMillis();
+        timerTimeline = new Timeline(new KeyFrame(
+                Duration.seconds(1),
+                ae -> updateTimer()
+        ));
+        timerTimeline.setCycleCount(Timeline.INDEFINITE);
+        timerTimeline.play();
+
+        gamePanel.requestFocus();
+    }
+
+    private void returnToMainMenu() {
+        try {
+            if (timeLine != null) timeLine.stop();
+            if (timerTimeline != null) timerTimeline.stop();
+            if (instantDropTimeline != null) instantDropTimeline.stop();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainMenu.fxml"));
+            Parent menuRoot = loader.load();
+
+            Stage stage = (Stage) gamePanel.getScene().getWindow();
+
+            Scene menuScene = new Scene(menuRoot, 620, 600);
+            stage.setScene(menuScene);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 

@@ -1,35 +1,33 @@
 package com.comp2042;
 
-import com.comp2042.game.control.GameController;
-import com.comp2042.game.control.GuiController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class Main extends Application {
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
+    private static Stage primaryStage;
 
-        URL location = getClass().getClassLoader().getResource("gameLayout.fxml");
-        ResourceBundle resources = null;
-        FXMLLoader fxmlLoader = new FXMLLoader(location, resources);
-        Parent root = fxmlLoader.load();
-        GuiController c = fxmlLoader.getController();
+    @Override
+    public void start(Stage stage) throws Exception {
+        primaryStage = stage;
+
+        Font.loadFont(getClass().getClassLoader().getResource("determination.ttf").toExternalForm(), 38);
+
+        Parent root = FXMLLoader.load(getClass().getResource("/mainMenu.fxml"));
 
         primaryStage.setTitle("TetrisJFX");
         Scene scene = new Scene(root, 620, 600);
-
         primaryStage.setScene(scene);
         primaryStage.show();
-        new GameController(c);
     }
 
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
     public static void main(String[] args) {
         launch(args);
