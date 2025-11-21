@@ -36,6 +36,14 @@
         </VBox>
     </VBox>
 
+    <HBox alignment="BOTTOM_LEFT" spacing="20" StackPane.alignment="BOTTOM_LEFT" pickOnBounds="false">
+        <padding>
+            <Insets bottom="25" left="20"/>
+        </padding>
+        <Label fx:id="musicStatusLabel" text="Music: ON" styleClass="statusLabel"/>
+        <Label fx:id="sfxStatusLabel" text="SFX: ON" styleClass="statusLabel"/>
+    </HBox>
+
     <StackPane fx:id="instructionsOverlay" visible="false"
                style="-fx-background-color: rgba(0, 0, 0, 0.85);">
         <VBox alignment="CENTER" spacing="20" styleClass="instructionsPanel">
@@ -53,6 +61,8 @@
                 <Label text="C  -  Hold Piece" styleClass="instructionsText"/>
                 <Label text="P  -  Pause" styleClass="instructionsText"/>
                 <Label text="N  -  New Game" styleClass="instructionsText"/>
+                <Label text="M  -  Toggle Music" styleClass="instructionsText"/>
+                <Label text="K  -  Toggle Sound Effects" styleClass="instructionsText"/>
             </VBox>
 
             <Button text="BACK" styleClass="menuButton, backButton"

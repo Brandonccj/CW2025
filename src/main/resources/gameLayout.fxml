@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 
+<?import javafx.geometry.Insets?>
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.comp2042.game.control.GuiController"
            alignment="CENTER"
@@ -66,6 +67,14 @@
         </Group>
 
     </Pane>
+
+    <HBox alignment="BOTTOM_LEFT" spacing="20" StackPane.alignment="BOTTOM_LEFT" pickOnBounds="false">
+        <padding>
+            <Insets bottom="25" left="20"/>
+        </padding>
+        <Label fx:id="musicStatusLabel" text="Music: ON" styleClass="statusLabel"/>
+        <Label fx:id="sfxStatusLabel" text="SFX: ON" styleClass="statusLabel"/>
+    </HBox>
 
     <StackPane fx:id="pauseOverlay" visible="false"
                style="-fx-background-color: rgba(50, 50, 50, 0.7);">

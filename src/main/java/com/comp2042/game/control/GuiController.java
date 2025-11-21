@@ -6,6 +6,7 @@ import com.comp2042.game.ui.NotificationPanel;
 import com.comp2042.game.ui.ViewData;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -28,6 +29,7 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import com.comp2042.game.ui.PauseMenu;
@@ -78,6 +80,12 @@ public class GuiController implements Initializable {
     @FXML
     private StackPane pauseOverlay;
 
+    @FXML
+    private Label musicStatusLabel;
+
+    @FXML
+    private Label sfxStatusLabel;
+
     private PauseMenu pauseMenu;
 
     private GameOverPanel gameOverPanel;
@@ -113,6 +121,8 @@ public class GuiController implements Initializable {
     private boolean isDropping = false;
     private final BooleanProperty spaceKeyPressed = new SimpleBooleanProperty(false);
 
+    private SoundManager soundManager;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Font.loadFont(getClass().getClassLoader().getResource("determination.ttf").toExternalForm(), 38);
@@ -135,6 +145,20 @@ public class GuiController implements Initializable {
                 }
                 if (keyEvent.getCode() == KeyCode.N) {
                     newGame(null);
+                    keyEvent.consume();
+                    return;
+                }
+                if (keyEvent.getCode() == KeyCode.M) {
+                    boolean currentState = soundManager.isMusicEnabled();
+                    soundManager.setMusicEnabled(!currentState);
+                    updateMusicStatusLabel();
+                    keyEvent.consume();
+                    return;
+                }
+                if (keyEvent.getCode() == KeyCode.K) {
+                    boolean currentState = soundManager.isSfxEnabled();
+                    soundManager.setSfxEnabled(!currentState);
+                    updateSfxStatusLabel();
                     keyEvent.consume();
                     return;
                 }
@@ -166,6 +190,7 @@ public class GuiController implements Initializable {
                         refreshBrick(eventListener.onHoldEvent(new MoveEvent(EventType.ROTATE, EventSource.USER)));
                         keyEvent.consume();
                     }
+
                 }
             }
 
@@ -181,7 +206,7 @@ public class GuiController implements Initializable {
         });
         gameOverPanel.setVisible(false);
 
-        shadowRectangles = new Rectangle[4][4]; // Assuming max brick size is 4x4
+        shadowRectangles = new Rectangle[4][4];
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 shadowRectangles[i][j] = new Rectangle(BRICK_SIZE, BRICK_SIZE);
@@ -202,6 +227,25 @@ public class GuiController implements Initializable {
 
     public void initGameView(int[][] boardMatrix, ViewData brick,GameMode mode) {
         this.currentGameMode = mode;
+        soundManager = SoundManager.getInstance();
+
+        if (mode == GameMode.ZEN) {
+            List<String> zenPlaylist = Arrays.asList(
+                    "/sounds/zen_music_1.mp3",
+                    "/sounds/zen_music_2.mp3"
+
+            );
+            soundManager.playPlaylist("zen_mode", zenPlaylist, false); // false = play in order
+        } else {
+            List<String> normalPlaylist = Arrays.asList(
+                    "/sounds/normal_music_1.mp3",
+                    "/sounds/normal_music_2.mp3",
+                    "/sounds/normal_music_3.mp3",
+                    "/sounds/normal_music_4.mp3"
+            );
+            soundManager.playPlaylist("normal_mode", normalPlaylist, true); // true = shuffle
+        }
+
         gameModeLabel = new Label(mode == GameMode.ZEN ? "ZEN MODE" : "NORMAL MODE");
         if (mode == GameMode.ZEN) {
             gameModeLabel.setStyle("-fx-font-family: 'Determination'; -fx-font-size: 18px; -fx-text-fill: #26A8B7; -fx-font-weight: bold;");
@@ -262,13 +306,28 @@ public class GuiController implements Initializable {
             pauseOverlay.getChildren().add(pauseMenu);
             pauseOverlay.setVisible(false);
 
-            pauseMenu.getResumeButton().setOnAction(e -> resumeGame());
-            pauseMenu.getRestartButton().setOnAction(e -> restartGame());
-            pauseMenu.getMainMenuButton().setOnAction(e -> returnToMainMenu());
+            pauseMenu.getResumeButton().setOnAction(e -> {
+                soundManager.playSound("button_click");
+                resumeGame();
+            });
+
+            pauseMenu.getRestartButton().setOnAction(e -> {
+                soundManager.playSound("button_click");
+                restartGame();
+            });
+
+            pauseMenu.getMainMenuButton().setOnAction(e -> {
+                soundManager.playSound("button_click");
+                returnToMainMenu();
+            });
+
         }
 
         if (gameOverPanel != null) {
-            gameOverPanel.getMainMenuButton().setOnAction(e -> returnToMainMenu());
+            gameOverPanel.getMainMenuButton().setOnAction(e -> {
+                soundManager.playSound("button_click");
+                returnToMainMenu();
+            });
         }
         if (mode == GameMode.ZEN) {
             levelLabel.setVisible(false);
@@ -280,6 +339,15 @@ public class GuiController implements Initializable {
         } else {
             highScoreLabel.setText("Best: N/A");
         }
+
+        Platform.runLater(() -> {
+            System.out.println("Initializing status labels...");
+            System.out.println("musicStatusLabel null? " + (musicStatusLabel == null));
+            System.out.println("sfxStatusLabel null? " + (sfxStatusLabel == null));
+
+            updateMusicStatusLabel();
+            updateSfxStatusLabel();
+        });
     }
 
     private void initHoldGrid() {
@@ -479,6 +547,7 @@ public class GuiController implements Initializable {
 
     private void showClearRowNotification(ClearRow clearRow) {
         if (clearRow != null && clearRow.getLinesRemoved() > 0) {
+            soundManager.playSound("clear_row");
             NotificationPanel notificationPanel = new NotificationPanel("+" + clearRow.getScoreBonus());
             groupNotification.getChildren().add(notificationPanel);
             notificationPanel.showScore(groupNotification.getChildren());
@@ -510,6 +579,17 @@ public class GuiController implements Initializable {
         if (timerTimeline != null) timerTimeline.stop();
         isGameOver.setValue(Boolean.TRUE);
         if (instantDropTimeline != null) instantDropTimeline.stop();
+
+        soundManager.stopMusic();
+        soundManager.playSound("board_clear");
+
+        Timeline musicDelayTimeline = new Timeline(new KeyFrame(
+                Duration.millis(2000),
+                ae -> {
+                    soundManager.playMusic("/sounds/gameover_music.mp3");
+                }
+        ));
+        musicDelayTimeline.play();
 
         long elapsed = (System.currentTimeMillis() - startTime) / 1000;
         long minutes = elapsed / 60;
@@ -577,14 +657,11 @@ public class GuiController implements Initializable {
         gamePanel.requestFocus();
     }
 
-    public void pauseGame(ActionEvent actionEvent) {
-        gamePanel.requestFocus();
-    }
-
     private void instantDrop() {
         if (isPause.getValue() || isGameOver.getValue() || isDropping) return;
 
         isDropping = true; // Set flag to prevent concurrent drops
+        soundManager.playSound("hard_drop");
 
         if (instantDropTimeline != null) {
             instantDropTimeline.stop();
@@ -709,8 +786,9 @@ public class GuiController implements Initializable {
         timeLine.play();
 
         Timeline delayTimeline = new Timeline(new KeyFrame(
-                Duration.millis(700),
+                Duration.millis(1000),
                 ae -> {
+                    soundManager.playSound("level_up");
                     NotificationPanel levelUpNotif = new NotificationPanel("LEVEL " + newLevel + "!");
                     groupNotification.getChildren().add(levelUpNotif);
                     levelUpNotif.showScore(groupNotification.getChildren());
@@ -748,6 +826,8 @@ public class GuiController implements Initializable {
         if (timerTimeline != null) timerTimeline.stop();
         if (instantDropTimeline != null) instantDropTimeline.stop();
 
+        soundManager.pauseMusic();
+
         if (pauseOverlay != null) {
             pauseOverlay.setVisible(true);
             pauseOverlay.toFront();
@@ -759,6 +839,8 @@ public class GuiController implements Initializable {
         isPause.setValue(Boolean.FALSE);
         timeLine.play();
         if (timerTimeline != null) timerTimeline.play();
+
+        soundManager.resumeMusic();
 
         if (pauseOverlay != null) {
             pauseOverlay.setVisible(false);
@@ -808,6 +890,9 @@ public class GuiController implements Initializable {
             if (timerTimeline != null) timerTimeline.stop();
             if (instantDropTimeline != null) instantDropTimeline.stop();
 
+            soundManager.stopMusic();
+            soundManager.playMusic("/sounds/menu_music.mp3");
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainMenu.fxml"));
             Parent menuRoot = loader.load();
 
@@ -821,11 +906,36 @@ public class GuiController implements Initializable {
         }
     }
     public void showZenClearNotification() {
+        soundManager.playSound("board_clear");
         NotificationPanel zenNotif = new NotificationPanel("BOARD CLEARED!");
         javafx.scene.control.Label label = (javafx.scene.control.Label) zenNotif.getCenter();
         label.setStyle("-fx-font-size: 26px; -fx-font-weight: bold;");
         groupNotification.getChildren().add(zenNotif);
         zenNotif.showScore(groupNotification.getChildren());
+    }
+
+    private void updateMusicStatusLabel() {
+        boolean isEnabled = soundManager.isMusicEnabled();
+        musicStatusLabel.setText("Music: " + (isEnabled ? "ON" : "OFF"));
+
+        if (isEnabled) {
+            musicStatusLabel.getStyleClass().remove("disabled");
+        } else {
+            if (!musicStatusLabel.getStyleClass().contains("disabled")) {
+                musicStatusLabel.getStyleClass().add("disabled");
+            }
+        }
+    }
+    private void updateSfxStatusLabel() {
+        boolean isEnabled = soundManager.isSfxEnabled();
+        sfxStatusLabel.setText("SFX: " + (isEnabled ? "ON" : "OFF"));
+        if (isEnabled) {
+            sfxStatusLabel.getStyleClass().remove("disabled");
+        } else {
+            if (!sfxStatusLabel.getStyleClass().contains("disabled")) {
+                sfxStatusLabel.getStyleClass().add("disabled");
+            }
+        }
     }
 
 }
