@@ -110,6 +110,9 @@ public class GuiController implements Initializable {
     private GameMode currentGameMode;
     private Label gameModeLabel;
 
+    private boolean isDropping = false;
+    private final BooleanProperty spaceKeyPressed = new SimpleBooleanProperty(false);
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Font.loadFont(getClass().getClassLoader().getResource("determination.ttf").toExternalForm(), 38);
@@ -153,13 +156,26 @@ public class GuiController implements Initializable {
                         keyEvent.consume();
                     }
                     if (keyEvent.getCode() == KeyCode.SPACE) {
-                        instantDrop();
+                        if (!isDropping && !spaceKeyPressed.getValue()) {
+                            spaceKeyPressed.setValue(true);
+                            instantDrop();
+                        }
                         keyEvent.consume();
                     }
                     if (keyEvent.getCode() == KeyCode.C) {
                         refreshBrick(eventListener.onHoldEvent(new MoveEvent(EventType.ROTATE, EventSource.USER)));
                         keyEvent.consume();
                     }
+                }
+            }
+
+        });
+        gamePanel.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.SPACE) {
+                    spaceKeyPressed.setValue(false);
+                    keyEvent.consume();
                 }
             }
         });
@@ -181,6 +197,8 @@ public class GuiController implements Initializable {
         reflection.setTopOpacity(0.9);
         reflection.setTopOffset(-12);
     }
+
+
 
     public void initGameView(int[][] boardMatrix, ViewData brick,GameMode mode) {
         this.currentGameMode = mode;
@@ -526,6 +544,9 @@ public class GuiController implements Initializable {
         if (timerTimeline != null) timerTimeline.stop();
         if (instantDropTimeline != null) instantDropTimeline.stop();
 
+        isDropping = false;
+        spaceKeyPressed.setValue(false);
+
         if (pauseOverlay != null) pauseOverlay.setVisible(false);
         isPause.setValue(Boolean.FALSE);
 
@@ -559,10 +580,15 @@ public class GuiController implements Initializable {
     public void pauseGame(ActionEvent actionEvent) {
         gamePanel.requestFocus();
     }
-    private void instantDrop() {
-        if (isPause.getValue() || isGameOver.getValue()) return;
 
-        if (instantDropTimeline != null) instantDropTimeline.stop();
+    private void instantDrop() {
+        if (isPause.getValue() || isGameOver.getValue() || isDropping) return;
+
+        isDropping = true; // Set flag to prevent concurrent drops
+
+        if (instantDropTimeline != null) {
+            instantDropTimeline.stop();
+        }
 
         instantDropTimeline = new Timeline(
                 new KeyFrame(Duration.millis(1), ae -> {
@@ -570,14 +596,20 @@ public class GuiController implements Initializable {
                             new MoveEvent(EventType.DOWN, EventSource.USER));
                     refreshBrick(down.getViewData());
 
-                    showClearRowNotification(down.getClearRow()); // Use the method here
+                    showClearRowNotification(down.getClearRow());
 
                     if (down.getClearRow() != null) {
                         instantDropTimeline.stop();
+                        isDropping = false;
                     }
                 })
         );
         instantDropTimeline.setCycleCount(Timeline.INDEFINITE);
+
+        instantDropTimeline.setOnFinished(event -> {
+            isDropping = false;
+        });
+
         instantDropTimeline.play();
     }
 
@@ -739,6 +771,9 @@ public class GuiController implements Initializable {
         if (timeLine != null) timeLine.stop();
         if (timerTimeline != null) timerTimeline.stop();
         if (instantDropTimeline != null) instantDropTimeline.stop();
+
+        isDropping = false;
+        spaceKeyPressed.setValue(false);
 
         pauseOverlay.setVisible(false);
 
