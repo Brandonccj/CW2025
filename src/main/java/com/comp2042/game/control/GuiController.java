@@ -88,6 +88,8 @@ public class GuiController implements Initializable {
 
     private Rectangle[][] rectangles;
 
+    private Rectangle[][] shadowRectangles;
+
     private Timeline timeLine;
 
     private final BooleanProperty isPause = new SimpleBooleanProperty();
@@ -162,6 +164,17 @@ public class GuiController implements Initializable {
             }
         });
         gameOverPanel.setVisible(false);
+
+        shadowRectangles = new Rectangle[4][4]; // Assuming max brick size is 4x4
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                shadowRectangles[i][j] = new Rectangle(BRICK_SIZE, BRICK_SIZE);
+                shadowRectangles[i][j].setFill(Color.TRANSPARENT);
+                shadowRectangles[i][j].setArcWidth(6);
+                shadowRectangles[i][j].setArcHeight(6);
+                shadowRectangles[i][j].setOpacity(0.35);
+            }
+        }
 
         final Reflection reflection = new Reflection();
         reflection.setFraction(0.8);
@@ -346,40 +359,35 @@ public class GuiController implements Initializable {
 
 
     private void refreshBrick(ViewData brick) {
-        clearGhosts();
         if (isPause.getValue() == Boolean.FALSE) {
-            positionBrickPanel(brick);
+            for (Rectangle[] row : rectangles) {
+                for (Rectangle r : row) {
+                    gamePanel.getChildren().remove(r);
+                    r.setFill(Color.TRANSPARENT);
+                }
+            }
+
             for (int i = 0; i < brick.getBrickData().length; i++) {
                 for (int j = 0; j < brick.getBrickData()[i].length; j++) {
-                    setRectangleData(brick.getBrickData()[i][j], rectangles[i][j]);
+                    if (brick.getBrickData()[i][j] != 0) {
+                        int gridX = brick.getxPosition() + j;
+                        int gridY = brick.getyPosition() + i;
+                        if (gridY >= 2 && gridY < 25) {
+                            rectangles[i][j].setFill(getFillColor(brick.getBrickData()[i][j]));
+                            rectangles[i][j].setArcWidth(6);
+                            rectangles[i][j].setArcHeight(6);
+                            gamePanel.add(rectangles[i][j], gridX, gridY - 2);
+                        }
+                    }
                 }
             }
-        }
 
-        List<int[][]> nextBricks = brick.getNextBricksData();
-        updatePreviewGrid(nextBricks);
-        updateHoldGrid(brick.getHeldBrickData());
-        int drop = brick.getDropDistance();
-        int[][] shape = brick.getBrickData();
-        for (int r = 0; r < shape.length; r++) {
-            for (int c = 0; c < shape[0].length; c++) {
-                if (shape[r][c] != 0) {
-                    Rectangle ghost = new Rectangle(BRICK_SIZE, BRICK_SIZE);
-                    ghost.setFill(getGhostColor(shape[r][c]));
-                    ghost.setStroke(Color.WHITE);
-                    ghost.setStrokeWidth(1);
-                    ghost.setStrokeType(StrokeType.INSIDE);
-                    ghost.setArcHeight(9);
-                    ghost.setArcWidth(9);
-                    ghost.setOpacity(0.35);
+            updateShadow(brick);
 
-                    int targetRow = brick.getyPosition() + r + drop;
-                    if (targetRow < 2 || targetRow >= 25) continue;
+            List<int[][]> nextBricks = brick.getNextBricksData();
+            updatePreviewGrid(nextBricks);
 
-                    gamePanel.add(ghost, brick.getxPosition() + c, targetRow - 2);
-                    ghostNodes.add(ghost);
-                }
-            }
+            updateHoldGrid(brick.getHeldBrickData());
         }
     }
 
@@ -587,9 +595,39 @@ public class GuiController implements Initializable {
         }
     }
 
-    private void clearGhosts() {
-        ghostNodes.forEach(g -> gamePanel.getChildren().remove(g));
-        ghostNodes.clear();
+    private void updateShadow(ViewData brick) {
+        // Clear old shadow pieces - REMOVE from gamePanel first
+        for (int i = 0; i < shadowRectangles.length; i++) {
+            for (int j = 0; j < shadowRectangles[i].length; j++) {
+                gamePanel.getChildren().remove(shadowRectangles[i][j]);
+                shadowRectangles[i][j].setFill(Color.TRANSPARENT);
+            }
+        }
+
+        // Calculate shadow Y position
+        int shadowYPosition = brick.getyPosition() + brick.getDropDistance();
+
+        // Only draw shadow if it's different from current position
+        if (shadowYPosition != brick.getyPosition()) {
+            for (int i = 0; i < brick.getBrickData().length; i++) {
+                for (int j = 0; j < brick.getBrickData()[i].length; j++) {
+                    if (brick.getBrickData()[i][j] != 0) {
+                        int gridX = brick.getxPosition() + j;
+                        int gridY = shadowYPosition + i;
+                        if (gridY >= 2 && gridY < 25) {
+                            shadowRectangles[i][j].setFill(getGhostColor(brick.getBrickData()[i][j]));
+                            shadowRectangles[i][j].setArcHeight(6);
+                            shadowRectangles[i][j].setArcWidth(6);
+                            shadowRectangles[i][j].setOpacity(0.35);
+                            shadowRectangles[i][j].setStroke(Color.WHITE);
+                            shadowRectangles[i][j].setStrokeWidth(1);
+                            shadowRectangles[i][j].setStrokeType(StrokeType.INSIDE);
+                            gamePanel.add(shadowRectangles[i][j], gridX, gridY - 2);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void updateTimer() {
@@ -756,5 +794,3 @@ public class GuiController implements Initializable {
     }
 
 }
-
-
