@@ -82,7 +82,6 @@ public class SoundManager {
         wasPlayingPlaylist = false;
 
         if (!musicEnabled) {
-            System.out.println("Music disabled, not playing: " + musicPath);
             return;
         }
 

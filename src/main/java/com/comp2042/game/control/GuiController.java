@@ -341,10 +341,6 @@ public class GuiController implements Initializable {
         }
 
         Platform.runLater(() -> {
-            System.out.println("Initializing status labels...");
-            System.out.println("musicStatusLabel null? " + (musicStatusLabel == null));
-            System.out.println("sfxStatusLabel null? " + (sfxStatusLabel == null));
-
             updateMusicStatusLabel();
             updateSfxStatusLabel();
         });
