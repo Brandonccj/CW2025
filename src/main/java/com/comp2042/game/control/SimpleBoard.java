@@ -182,7 +182,7 @@ public class SimpleBoard implements Board {
             return false;
         }
 
-        Brick currentBrick = brickRotator.brick;
+        Brick currentBrick =    brickRotator.brick;
 
         if (heldBrick == null) {
             heldBrick = currentBrick;

@@ -106,8 +106,6 @@ public class GuiController implements Initializable {
 
     private Timeline instantDropTimeline;
 
-    private final List<Rectangle> ghostNodes = new ArrayList<>();
-
     private long startTime;
     private Timeline timerTimeline;
     private int highScore = HighScoreManager.loadHighScore();
@@ -216,11 +214,6 @@ public class GuiController implements Initializable {
                 shadowRectangles[i][j].setOpacity(0.35);
             }
         }
-
-        final Reflection reflection = new Reflection();
-        reflection.setFraction(0.8);
-        reflection.setTopOpacity(0.9);
-        reflection.setTopOffset(-12);
     }
 
 
@@ -806,20 +799,6 @@ public class GuiController implements Initializable {
                 }
         ));
         delayTimeline.play();
-    }
-
-    public void resetLevel() {
-        currentLevel = 1;
-        levelLabel.setText("1");
-
-        // Reset speed to base speed
-        timeLine.stop();
-        timeLine = new Timeline(new KeyFrame(
-                Duration.millis(BASE_SPEED),
-                ae -> moveDown(new MoveEvent(EventType.DOWN, EventSource.THREAD))
-        ));
-        timeLine.setCycleCount(Timeline.INDEFINITE);
-        timeLine.play();
     }
     private void togglePause() {
         if (isGameOver.getValue()) return;
