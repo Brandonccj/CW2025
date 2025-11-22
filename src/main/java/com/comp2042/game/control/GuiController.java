@@ -229,34 +229,39 @@ public class GuiController implements Initializable {
         this.currentGameMode = mode;
         soundManager = SoundManager.getInstance();
 
+        StackPane rootPane = (StackPane) gamePanel.getScene().getRoot();
         if (mode == GameMode.ZEN) {
+            if (!rootPane.getStyleClass().contains("zen-mode")) {
+                rootPane.getStyleClass().add("zen-mode");
+            }
             List<String> zenPlaylist = Arrays.asList(
                     "/sounds/zen_music_1.mp3",
                     "/sounds/zen_music_2.mp3"
-
             );
-            soundManager.playPlaylist("zen_mode", zenPlaylist, false); // false = play in order
+            soundManager.playPlaylist("zen_mode", zenPlaylist, false);
+            gameModeLabel = new Label("ZEN MODE");
+            gameModeLabel.setStyle("-fx-font-family: 'Determination'; -fx-font-size: 18px; -fx-text-fill: #26A8B7; -fx-font-weight: bold;");
+            highScoreLabel.setVisible(false);
+            linesLabel.setText("0");
+            gamePanel.setStyle("-fx-effect: dropshadow(gaussian, rgba(77, 208, 225, 0.3), 5, 0.5, 0, 0);");
+
         } else {
+            rootPane.getStyleClass().remove("zen-mode");
             List<String> normalPlaylist = Arrays.asList(
                     "/sounds/normal_music_1.mp3",
                     "/sounds/normal_music_2.mp3",
                     "/sounds/normal_music_3.mp3",
                     "/sounds/normal_music_4.mp3"
             );
-            soundManager.playPlaylist("normal_mode", normalPlaylist, true); // true = shuffle
-        }
-
-        gameModeLabel = new Label(mode == GameMode.ZEN ? "ZEN MODE" : "NORMAL MODE");
-        if (mode == GameMode.ZEN) {
-            gameModeLabel.setStyle("-fx-font-family: 'Determination'; -fx-font-size: 18px; -fx-text-fill: #26A8B7; -fx-font-weight: bold;");
-            highScoreLabel.setVisible(false);
-            linesLabel.setText("0");
-        } else {
+            soundManager.playPlaylist("normal_mode", normalPlaylist, true);
+            gameModeLabel = new Label("NORMAL MODE");
             gameModeLabel.setStyle("-fx-font-family: 'Determination'; -fx-font-size: 18px; -fx-text-fill: #00FF00; -fx-font-weight: bold;");
             highScoreLabel.setText("High Score: " + highScore);
             highScoreLabel.setVisible(true);
             linesLabel.setText("0/5");
+            gamePanel.setStyle("-fx-effect: dropshadow(gaussian, rgba(156, 39, 176, 0.3), 5, 0.5, 0, 0);");
         }
+
         gameModeLabel.setLayoutX(270);
         gameModeLabel.setLayoutY(35);
         ((javafx.scene.layout.Pane) gamePanel.getParent()).getChildren().add(gameModeLabel);
@@ -305,6 +310,8 @@ public class GuiController implements Initializable {
             pauseOverlay.getChildren().clear();
             pauseOverlay.getChildren().add(pauseMenu);
             pauseOverlay.setVisible(false);
+
+            pauseMenu.setGameMode(mode);
 
             pauseMenu.getResumeButton().setOnAction(e -> {
                 soundManager.playSound("button_click");
@@ -406,37 +413,31 @@ public class GuiController implements Initializable {
     }
 
     private Paint getFillColor(int i) {
-        Paint returnPaint;
-        switch (i) {
-            case 0:
-                returnPaint = Color.TRANSPARENT;
-                break;
-            case 1:
-                returnPaint = Color.AQUA;
-                break;
-            case 2:
-                returnPaint = Color.BLUEVIOLET;
-                break;
-            case 3:
-                returnPaint = Color.DARKGREEN;
-                break;
-            case 4:
-                returnPaint = Color.YELLOW;
-                break;
-            case 5:
-                returnPaint = Color.RED;
-                break;
-            case 6:
-                returnPaint = Color.BEIGE;
-                break;
-            case 7:
-                returnPaint = Color.BURLYWOOD;
-                break;
-            default:
-                returnPaint = Color.WHITE;
-                break;
+        if (currentGameMode == GameMode.ZEN) {
+            switch (i) {
+                case 0: return Color.TRANSPARENT;
+                case 1: return Color.rgb(77, 208, 225);    // Cyan
+                case 2: return Color.rgb(100, 181, 246);   // Light blue
+                case 3: return Color.rgb(38, 198, 218);    // Teal
+                case 4: return Color.rgb(128, 222, 234);   // Pale cyan
+                case 5: return Color.rgb(0, 188, 212);     // Dark cyan
+                case 6: return Color.rgb(77, 182, 172);    // Teal-green
+                case 7: return Color.rgb(38, 166, 154);    // Sea green
+                default: return Color.WHITE;
+            }
+        } else {
+            switch (i) {
+                case 0: return Color.TRANSPARENT;
+                case 1: return Color.rgb(186, 104, 200);   // Light purple
+                case 2: return Color.rgb(156, 39, 176);    // Deep purple
+                case 3: return Color.rgb(123, 31, 162);    // Rich purple
+                case 4: return Color.rgb(103, 58, 183);    // Indigo-purple
+                case 5: return Color.rgb(149, 117, 205);   // Soft lavender
+                case 6: return Color.rgb(94, 53, 177);     // Medium-dark purple
+                case 7: return Color.rgb(74, 20, 140);     // Dark violet
+                default: return Color.WHITE;
+            }
         }
-        return returnPaint;
     }
 
 
@@ -687,16 +688,30 @@ public class GuiController implements Initializable {
     }
 
     private Paint getGhostColor(int colorCode) {
-        switch (colorCode) {
-            case 0: return Color.TRANSPARENT;
-            case 1: return Color.DARKBLUE;
-            case 2: return Color.PURPLE.darker();
-            case 3: return Color.DARKGREEN.darker();
-            case 4: return Color.GOLDENROD;
-            case 5: return Color.DARKRED;
-            case 6: return Color.BEIGE.darker();
-            case 7: return Color.BURLYWOOD.darker();
-            default: return Color.GRAY;
+        if (currentGameMode == GameMode.ZEN) {
+            switch (colorCode) {
+                case 0: return Color.TRANSPARENT;
+                case 1: return Color.rgb(38, 104, 113);    // Dark cyan
+                case 2: return Color.rgb(50, 90, 123);     // Dark light blue
+                case 3: return Color.rgb(19, 99, 109);     // Dark teal
+                case 4: return Color.rgb(64, 111, 117);    // Dark pale cyan
+                case 5: return Color.rgb(0, 94, 106);      // Very dark cyan
+                case 6: return Color.rgb(38, 91, 86);      // Dark teal-green
+                case 7: return Color.rgb(19, 83, 77);      // Dark sea green
+                default: return Color.GRAY;
+            }
+        } else {
+            switch (colorCode) {
+                case 0: return Color.TRANSPARENT;
+                case 1: return Color.rgb(112,  62, 120);   // ghost light purple
+                case 2: return Color.rgb( 94,  23, 106);   // ghost deep purple
+                case 3: return Color.rgb( 74,  19,  97);   // ghost rich purple
+                case 4: return Color.rgb( 62,  35, 110);   // ghost indigo-purple
+                case 5: return Color.rgb( 89,  70, 123);   // ghost soft lavender
+                case 6: return Color.rgb( 56,  32, 106);   // ghost medium-dark purple
+                case 7: return Color.rgb( 44,  12,  84);   // ghost dark violet
+                default: return Color.GRAY;
+            }
         }
     }
 

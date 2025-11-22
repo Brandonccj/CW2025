@@ -1,5 +1,6 @@
 package com.comp2042.game.ui;
 
+import com.comp2042.game.event.GameMode;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,17 +15,18 @@ public class PauseMenu extends StackPane {
     private final Button resumeButton;
     private final Button restartButton;
     private final Button mainMenuButton;
+    private final Rectangle background;
 
     public PauseMenu() {
         setPrefSize(350, 350);
         setMinSize(350, 350);
         setMaxSize(350, 350);
 
-        Rectangle background = new Rectangle(350, 350);
+        background = new Rectangle(350, 350);
         background.setArcWidth(30);
         background.setArcHeight(30);
         background.setFill(Color.rgb(0, 0, 0, 0.85));
-        background.setStroke(Color.rgb(255, 255, 0));
+        background.setStroke(Color.rgb(156, 39, 176));
         background.setStrokeWidth(3);
 
         VBox content = new VBox(25);
@@ -57,6 +59,14 @@ public class PauseMenu extends StackPane {
         setAlignment(Pos.CENTER);
     }
 
+    public void setGameMode(GameMode mode) {
+        if (mode == GameMode.ZEN) {
+            background.setStroke(Color.rgb(77, 208, 225)); // Cyan (#4DD0E1)
+        } else {
+            background.setStroke(Color.rgb(156, 39, 176)); // Purple (#9C27B0)
+        }
+    }
+
     public Button getResumeButton() {
         return resumeButton;
     }
@@ -69,4 +79,3 @@ public class PauseMenu extends StackPane {
         return mainMenuButton;
     }
 }
-

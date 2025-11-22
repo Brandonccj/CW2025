@@ -17,17 +17,18 @@ public class GameOverPanel extends StackPane {
     private final Label highScoreLabel;
     private final Label linesLabel;
     private Button mainMenuButton;
+    private final Rectangle background;
 
     public GameOverPanel() {
-        setPrefSize(350, 450);  // Increased height for button
+        setPrefSize(350, 450);
         setMinSize(350, 450);
         setMaxSize(350, 450);
 
-        Rectangle background = new Rectangle(350, 450);
+        background = new Rectangle(350, 450);
         background.setArcWidth(30);
         background.setArcHeight(30);
         background.setFill(Color.rgb(0, 0, 0, 0.85));
-        background.setStroke(Color.rgb(38, 168, 183));
+        background.setStroke(Color.rgb(156, 39, 176));
         background.setStrokeWidth(3);
 
         VBox content = new VBox(20);
