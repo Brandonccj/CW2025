@@ -1,6 +1,6 @@
 package com.comp2042.game.event;
 
-import com.comp2042.game.ui.ViewData;
+import com.comp2042.game.view.ViewData;
 
 public final class DownData {
     private final ClearRow clearRow;

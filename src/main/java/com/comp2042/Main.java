@@ -7,6 +7,11 @@ import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ * Main application entry point for TetrisJFX.
+ * Initializes JavaFX application, loads custom fonts, and displays the main menu.
+ */
+
 public class Main extends Application {
 
     private static Stage primaryStage;

@@ -1,24 +1,28 @@
 package com.comp2042.game.control;
 
-import javafx.scene.Scene;
-import com.comp2042.Main;
+import com.comp2042.game.controller.audio.SoundManager;
+import com.comp2042.game.controller.game.GameController;  // ← THIS IS THE KEY LINE!
 import com.comp2042.game.event.GameMode;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.event.EventHandler;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+/**
+ * Controller for the main menu screen.
+ * Handles menu navigation and game mode selection.
+ */
 public class MenuController implements Initializable {
 
     @FXML
@@ -42,7 +46,6 @@ public class MenuController implements Initializable {
             updateMusicStatusLabel();
             updateSfxStatusLabel();
         });
-
 
         Platform.runLater(() -> {
             if (instructionsOverlay.getScene() != null) {
@@ -118,6 +121,7 @@ public class MenuController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
+            System.err.println("Error starting game: " + e.getMessage());
         }
     }
 

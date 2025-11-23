@@ -1,6 +1,6 @@
 package com.comp2042.game.event;
 
-import com.comp2042.game.control.MatrixOperations;
+import com.comp2042.game.util.MatrixOperations;
 
 public final class ClearRow {
 
