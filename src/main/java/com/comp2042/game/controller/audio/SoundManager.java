@@ -19,12 +19,13 @@ public class SoundManager {
     private boolean musicEnabled = true;
     private boolean sfxEnabled = true;
     private double musicVolume = 0.5;
-    private double sfxVolume = 0.7;
+    private double sfxVolume = 0.5;
 
     private List<String> currentPlaylist;
     private int currentTrackIndex = 0;
     private boolean shuffleMode = false;
     private String currentPlaylistName = "";
+    private String pendingMusicTrack = null; // Track what music should play when unmuted
 
     private SoundManager() {
         soundEffects = new HashMap<>();
@@ -44,8 +45,10 @@ public class SoundManager {
             loadSound("button_click", "/sounds/button_click.wav");
             loadSound("hard_drop", "/sounds/hard_drop.wav");
             loadSound("clear_row", "/sounds/clear_row.wav");
-            loadSound("board_clear", "/sounds/board_clear.wav");
+            loadSound("gameover", "/sounds/gameover.wav");
             loadSound("level_up", "/sounds/level_up.wav");
+            loadSound("zen_clear", "/sounds/zen_clear.wav");
+            loadSound("hold_piece", "/sounds/hold_piece.wav");
         } catch (Exception e) {
             System.err.println("Error loading sound effects: " + e.getMessage());
         }
@@ -78,7 +81,13 @@ public class SoundManager {
     public void playMusic(String musicPath) {
         stopMusic();
 
+        // Clear playlist info since this is single track
+        currentPlaylist.clear();
+        currentPlaylistName = "";
+        pendingMusicTrack = musicPath;
+
         if (!musicEnabled) {
+            // Don't play now, but remember what to play when enabled
             return;
         }
 
@@ -108,6 +117,7 @@ public class SoundManager {
 
         currentPlaylistName = playlistName;
         currentPlaylist = new ArrayList<>(musicPaths);
+        pendingMusicTrack = null; // Clear single track
         shuffleMode = shuffle;
         currentTrackIndex = 0;
 
@@ -118,6 +128,7 @@ public class SoundManager {
         if (musicEnabled) {
             playTrackFromPlaylist(0);
         }
+        // If music disabled, playlist info is stored and will play when enabled
     }
 
     private void playTrackFromPlaylist(int index) {
@@ -202,6 +213,10 @@ public class SoundManager {
             musicPlayer.dispose();
             musicPlayer = null;
         }
+        // Clear pending music info when explicitly stopping
+        pendingMusicTrack = null;
+        currentPlaylist.clear();
+        currentPlaylistName = "";
     }
 
     public void pauseMusic() {
@@ -220,11 +235,18 @@ public class SoundManager {
         this.musicEnabled = enabled;
 
         if (!enabled) {
+            // When disabling, pause current music
             pauseMusic();
         } else {
+            // When enabling music
             if (musicPlayer != null && musicPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
+                // Resume paused music
                 resumeMusic();
+            } else if (pendingMusicTrack != null) {
+                // Play pending single track music
+                playMusic(pendingMusicTrack);
             } else if (!currentPlaylist.isEmpty()) {
+                // Resume playlist from current position
                 playTrackFromPlaylist(currentTrackIndex);
             }
         }

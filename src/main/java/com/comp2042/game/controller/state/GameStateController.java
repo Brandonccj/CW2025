@@ -18,6 +18,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Manages game state transitions including pause, resume, game over, and new game.
  * Controls overlay visibility and handles state-dependent behaviors.
@@ -90,12 +93,16 @@ public class GameStateController {
         animationManager.stopAllTimelines();
         isGameOver.setValue(Boolean.TRUE);
 
+        // Stop current music and play game over sequence
         soundManager.stopMusic();
-        soundManager.playSound("board_clear");
+        soundManager.playSound("gameover");
 
         Timeline musicDelayTimeline = new Timeline(new KeyFrame(
                 Duration.millis(2000),
-                ae -> soundManager.playMusic("/sounds/gameover_music.mp3")
+                ae -> {
+                    // Play game over music (will be stored as pending if muted)
+                    soundManager.playMusic("/sounds/gameover_music.mp3");
+                }
         ));
         musicDelayTimeline.play();
 
@@ -142,6 +149,10 @@ public class GameStateController {
         eventListener.createNewGame();
         viewController.refreshBrick(eventListener.getViewData());
 
+        // Stop any current music (like game over music) and start game music
+        soundManager.stopMusic();
+        restartGameMusic();
+
         animationManager.startGameTimeline();
         animationManager.resetStartTime();
 
@@ -160,15 +171,43 @@ public class GameStateController {
         eventListener.createNewGame();
         viewController.refreshBrick(eventListener.getViewData());
 
+        // Restart game music based on mode
+        soundManager.stopMusic();
+        restartGameMusic();
+
         animationManager.startGameTimeline();
         animationManager.resetStartTime();
 
         viewController.getGamePanel().requestFocus();
     }
 
+    private void restartGameMusic() {
+        GameMode mode = viewController.getCurrentGameMode();
+        if (mode == GameMode.ZEN) {
+            List<String> zenPlaylist = Arrays.asList(
+                    "/sounds/zen_music_1.mp3",
+                    "/sounds/zen_music_2.mp3",
+                    "/sounds/zen_music_3.mp3"
+            );
+            soundManager.playPlaylist("zen_mode", zenPlaylist, true);
+        } else {
+            List<String> normalPlaylist = Arrays.asList(
+                    "/sounds/normal_music_1.mp3",
+                    "/sounds/normal_music_2.mp3",
+                    "/sounds/normal_music_3.mp3",
+                    "/sounds/normal_music_4.mp3",
+                    "/sounds/normal_music_5.mp3",
+                    "/sounds/normal_music_6.mp3"
+            );
+            soundManager.playPlaylist("normal_mode", normalPlaylist, true);
+        }
+    }
+
     public void returnToMainMenu() {
         try {
             animationManager.stopAllTimelines();
+
+            // Stop current music completely and start menu music
             soundManager.stopMusic();
             soundManager.playMusic("/sounds/menu_music.mp3");
 

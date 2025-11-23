@@ -97,7 +97,7 @@ public class GameViewController {
     }
 
     public void showZenClearNotification() {
-        soundManager.playSound("board_clear");
+        soundManager.playSound("zen_clear");
         NotificationPanel zenNotif = new NotificationPanel("BOARD CLEARED!");
         javafx.scene.control.Label label = (javafx.scene.control.Label) zenNotif.getCenter();
         label.setStyle("-fx-font-size: 26px; -fx-font-weight: bold;");

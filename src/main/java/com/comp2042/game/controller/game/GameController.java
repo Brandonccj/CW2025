@@ -1,6 +1,7 @@
 package com.comp2042.game.controller.game;
 
 import com.comp2042.game.control.GuiController;
+import com.comp2042.game.controller.audio.SoundManager;
 import com.comp2042.game.event.*;
 import com.comp2042.game.model.board.Board;
 import com.comp2042.game.view.ViewData;
@@ -16,11 +17,14 @@ public class GameController implements InputEventListener {
     private int currentLevel = 1;
     private static final int LINES_PER_LEVEL = 5;
     private final GameMode gameMode;
+    private final SoundManager soundManager;
 
     public GameController(GuiController c, GameMode mode) {
         this.gameMode = mode;
         this.board = new BoardController(25, 10, mode);
-        viewGuiController = c;
+        this.viewGuiController = c;
+        this.soundManager = SoundManager.getInstance();
+
         board.createNewBrick();
         viewGuiController.setEventListener(this);
         viewGuiController.initGameView(board.getBoardMatrix(), board.getViewData(), mode);
@@ -104,7 +108,10 @@ public class GameController implements InputEventListener {
 
     @Override
     public ViewData onHoldEvent(MoveEvent event) {
-        board.holdBrick();
+        boolean success = board.holdBrick();
+        if (success) {
+            soundManager.playSound("hold_piece");
+        }
         return board.getViewData();
     }
 

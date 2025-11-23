@@ -53,9 +53,10 @@ public class GameSetupManager {
         // Setup zen music playlist
         List<String> zenPlaylist = Arrays.asList(
                 "/sounds/zen_music_1.mp3",
-                "/sounds/zen_music_2.mp3"
+                "/sounds/zen_music_2.mp3",
+                "/sounds/zen_music_3.mp3"
         );
-        soundManager.playPlaylist("zen_mode", zenPlaylist, false);
+        soundManager.playPlaylist("zen_mode", zenPlaylist, true);
 
         // Configure UI for zen mode
         gameModeLabel = new Label("ZEN MODE");
@@ -81,7 +82,9 @@ public class GameSetupManager {
                 "/sounds/normal_music_1.mp3",
                 "/sounds/normal_music_2.mp3",
                 "/sounds/normal_music_3.mp3",
-                "/sounds/normal_music_4.mp3"
+                "/sounds/normal_music_4.mp3",
+                "/sounds/normal_music_5.mp3",
+                "/sounds/normal_music_6.mp3"
         );
         soundManager.playPlaylist("normal_mode", normalPlaylist, true);
 

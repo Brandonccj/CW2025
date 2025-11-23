@@ -1,7 +1,7 @@
 package com.comp2042.game.control;
 
 import com.comp2042.game.controller.audio.SoundManager;
-import com.comp2042.game.controller.game.GameController;  // ← THIS IS THE KEY LINE!
+import com.comp2042.game.controller.game.GameController;
 import com.comp2042.game.event.GameMode;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -41,6 +41,8 @@ public class MenuController implements Initializable {
         soundManager = SoundManager.getInstance();
 
         Platform.runLater(() -> {
+            // Stop any music and play menu music
+            soundManager.stopMusic();
             soundManager.playMusic("/sounds/menu_music.mp3");
 
             updateMusicStatusLabel();
@@ -56,6 +58,11 @@ public class MenuController implements Initializable {
                             boolean currentState = soundManager.isMusicEnabled();
                             soundManager.setMusicEnabled(!currentState);
                             updateMusicStatusLabel();
+
+                            // If enabling music and no music is playing, start menu music
+                            if (!currentState) {
+                                soundManager.playMusic("/sounds/menu_music.mp3");
+                            }
                             keyEvent.consume();
                         }
                         if (keyEvent.getCode() == KeyCode.K) {

@@ -1,6 +1,7 @@
 package com.comp2042.game.control;
 
 import com.comp2042.game.controller.animation.AnimationManager;
+import com.comp2042.game.controller.audio.SoundManager;
 import com.comp2042.game.controller.input.InputHandler;
 import com.comp2042.game.controller.state.GameStateController;
 import com.comp2042.game.controller.ui.GameViewController;
@@ -10,6 +11,7 @@ import com.comp2042.game.view.GameOverPanel;
 import com.comp2042.game.view.PauseMenu;
 import com.comp2042.game.view.ViewData;
 import javafx.beans.property.IntegerProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -45,6 +47,7 @@ public class GuiController implements Initializable {
     private AnimationManager animationManager;
     private InputHandler inputHandler;
     private GameStateController stateController;
+    private SoundManager soundManager;
 
     private PauseMenu pauseMenu;
     private GameOverPanel gameOverPanel;
@@ -53,6 +56,8 @@ public class GuiController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Font.loadFont(getClass().getClassLoader().getResource("determination.ttf").toExternalForm(), 38);
+
+        soundManager = SoundManager.getInstance();
 
         // Initialize UI components
         gameOverPanel = new GameOverPanel();
@@ -111,10 +116,22 @@ public class GuiController implements Initializable {
     }
 
     private void setupButtonHandlers() {
-        pauseMenu.getResumeButton().setOnAction(e -> stateController.resumeGame());
-        pauseMenu.getRestartButton().setOnAction(e -> stateController.restartGame());
-        pauseMenu.getMainMenuButton().setOnAction(e -> stateController.returnToMainMenu());
-        gameOverPanel.getMainMenuButton().setOnAction(e -> stateController.returnToMainMenu());
+        pauseMenu.getResumeButton().setOnAction(e -> {
+            soundManager.playSound("button_click");
+            stateController.resumeGame();
+        });
+        pauseMenu.getRestartButton().setOnAction(e -> {
+            soundManager.playSound("button_click");
+            stateController.restartGame();
+        });
+        pauseMenu.getMainMenuButton().setOnAction(e -> {
+            soundManager.playSound("button_click");
+            stateController.returnToMainMenu();
+        });
+        gameOverPanel.getMainMenuButton().setOnAction(e -> {
+            soundManager.playSound("button_click");
+            stateController.returnToMainMenu();
+        });
     }
 
     // Delegation methods
