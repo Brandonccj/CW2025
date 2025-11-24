@@ -119,10 +119,11 @@ public class MenuController implements Initializable {
             Parent gameRoot = loader.load();
             GuiController guiController = loader.getController();
 
-            Stage stage = (Stage) instructionsOverlay.getScene().getWindow();
+            // Get the current scene (DON'T get the stage)
+            Scene currentScene = instructionsOverlay.getScene();
 
-            Scene gameScene = new Scene(gameRoot, 620, 600);
-            stage.setScene(gameScene);
+            // Replace the root instead of creating a new scene
+            currentScene.setRoot(gameRoot);
 
             new GameController(guiController, mode);
 

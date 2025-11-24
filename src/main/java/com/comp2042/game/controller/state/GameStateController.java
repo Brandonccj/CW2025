@@ -214,9 +214,10 @@ public class GameStateController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mainMenu.fxml"));
             Parent menuRoot = loader.load();
 
-            Stage stage = (Stage) viewController.getGamePanel().getScene().getWindow();
-            Scene menuScene = new Scene(menuRoot, 620, 600);
-            stage.setScene(menuScene);
+            // Get the current scene and replace its root
+            Scene currentScene = viewController.getGamePanel().getScene();
+            currentScene.setRoot(menuRoot);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

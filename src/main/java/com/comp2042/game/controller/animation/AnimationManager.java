@@ -119,8 +119,14 @@ public class AnimationManager {
     }
 
     private void updateTimer() {
-        // Timer update is handled by GameStateController now
-        // This method can notify a callback if needed
+        // Calculate elapsed time
+        long elapsed = (System.currentTimeMillis() - startTime) / 1000;
+        long minutes = elapsed / 60;
+        long seconds = elapsed % 60;
+        String timeString = String.format("%d:%02d", minutes, seconds);
+
+        // Update the timer label in the view
+        viewController.updateTimerLabel(timeString);
     }
 
     public void levelUp(int newLevel) {

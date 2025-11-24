@@ -70,10 +70,10 @@ public class GuiController implements Initializable {
     }
 
     public void initGameView(int[][] boardMatrix, ViewData brick, GameMode mode) {
-        // Create view controller
+
         viewController = new GameViewController(
                 gamePanel, nextBrickGrid, heldBrickGrid, groupNotification,
-                scoreLabel, highScoreLabel, levelLabel, linesLabel,
+                scoreLabel, highScoreLabel, levelLabel, linesLabel, timeLabel,
                 musicStatusLabel, sfxStatusLabel
         );
 

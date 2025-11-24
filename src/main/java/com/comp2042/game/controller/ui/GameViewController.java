@@ -12,6 +12,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+
 /**
  * Main coordinator for game view components.
  * Delegates rendering to specialized renderer classes.
@@ -30,6 +31,7 @@ public class GameViewController {
     private final Label highScoreLabel;
     private final Label levelLabel;
     private final Label linesLabel;
+    private final Label timeLabel;
     private final Label musicStatusLabel;
     private final Label sfxStatusLabel;
 
@@ -52,6 +54,31 @@ public class GameViewController {
         this.sfxStatusLabel = sfxStatusLabel;
         this.soundManager = SoundManager.getInstance();
 
+        // Initialize timeLabel to null - will be set from GuiController
+        this.timeLabel = null;
+
+        // Create renderers
+        this.brickRenderer = new BrickRenderer(gamePanel);
+        this.gridRenderer = new GridRenderer(nextBrickGrid, heldBrickGrid);
+        this.setupManager = new GameSetupManager(gamePanel, highScoreLabel, linesLabel, levelLabel);
+    }
+
+    // Constructor with timeLabel
+    public GameViewController(GridPane gamePanel, GridPane nextBrickGrid, GridPane heldBrickGrid,
+                              Group groupNotification, Label scoreLabel, Label highScoreLabel,
+                              Label levelLabel, Label linesLabel, Label timeLabel,
+                              Label musicStatusLabel, Label sfxStatusLabel) {
+        this.gamePanel = gamePanel;
+        this.groupNotification = groupNotification;
+        this.scoreLabel = scoreLabel;
+        this.highScoreLabel = highScoreLabel;
+        this.levelLabel = levelLabel;
+        this.linesLabel = linesLabel;
+        this.timeLabel = timeLabel;
+        this.musicStatusLabel = musicStatusLabel;
+        this.sfxStatusLabel = sfxStatusLabel;
+        this.soundManager = SoundManager.getInstance();
+
         // Create renderers
         this.brickRenderer = new BrickRenderer(gamePanel);
         this.gridRenderer = new GridRenderer(nextBrickGrid, heldBrickGrid);
@@ -70,6 +97,11 @@ public class GameViewController {
         gridRenderer.initHoldGrid();
 
         highScoreLabel.setText("High Score: " + highScore);
+
+        // Initialize timer display
+        if (timeLabel != null) {
+            timeLabel.setText("Time: 0:00");
+        }
 
         Platform.runLater(() -> {
             updateMusicStatusLabel();
@@ -171,6 +203,12 @@ public class GameViewController {
         levelLabel.setText(String.valueOf(level));
     }
 
+    public void updateTimerLabel(String timeString) {
+        if (timeLabel != null) {
+            Platform.runLater(() -> timeLabel.setText("Time: " + timeString));
+        }
+    }
+
     // Getters
     public GameMode getCurrentGameMode() {
         return currentGameMode;
@@ -194,5 +232,9 @@ public class GameViewController {
 
     public Label getLinesLabel() {
         return linesLabel;
+    }
+
+    public Label getTimeLabel() {
+        return timeLabel;
     }
 }
