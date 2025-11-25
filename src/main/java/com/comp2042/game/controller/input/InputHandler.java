@@ -50,7 +50,7 @@ public class InputHandler {
     private EventHandler<KeyEvent> createKeyPressedHandler() {
         return keyEvent -> {
             // Global controls (work anytime)
-            if (keyEvent.getCode() == KeyCode.P) {
+            if (keyEvent.getCode() == KeyCode.P|| keyEvent.getCode() == KeyCode.ESCAPE) {
                 stateController.togglePause();
                 keyEvent.consume();
                 return;

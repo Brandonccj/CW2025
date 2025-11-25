@@ -59,7 +59,7 @@
                 <Label text="↓ or S  -  Soft Drop" styleClass="instructionsText"/>
                 <Label text="SPACE  -  Hard Drop" styleClass="instructionsText"/>
                 <Label text="C  -  Hold Piece" styleClass="instructionsText"/>
-                <Label text="P  -  Pause" styleClass="instructionsText"/>
+                <Label text="P or ESC  -  Pause" styleClass="instructionsText"/>
                 <Label text="N  -  New Game" styleClass="instructionsText"/>
                 <Label text="M  -  Toggle Music" styleClass="instructionsText"/>
                 <Label text="K  -  Toggle Sound Effects" styleClass="instructionsText"/>
