@@ -24,7 +24,7 @@
 .headerLabel {
     -fx-font-family: "Determination";
     -fx-font-size: 14px;
-    -fx-text-fill: #BA68C8;
+    -fx-text-fill: #C0C0C0;
     -fx-font-weight: bold;
 }
 
@@ -163,10 +163,11 @@
 
 .root.zen-mode .titleLabel {
     -fx-text-fill: #4DD0E1; /* Cyan - matches water/castle */
+    -fx-effect: dropshadow(gaussian, rgba(77, 208, 225, 0.6), 20, 0.5, 0, 0);
 }
 
 .root.zen-mode .headerLabel {
-    -fx-text-fill: #80DEEA; /* Light cyan */
+    -fx-text-fill: #C0C0C0; /* Light cyan */
 }
 
 .root.zen-mode .sideLabel {
