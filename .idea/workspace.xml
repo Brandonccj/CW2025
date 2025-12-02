@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b4d3eea1-6580-4c4c-8cbb-5ae59386c68b" name="Changes" comment="Created meaningful Junit tests to test classes and methods">
+      <change afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/highscore.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/easycode.ignore" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/.idea/easycode.ignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/easycode/codebase-v2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/.idea/easycode/codebase-v2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/highscore.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/control/GuiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/control/GuiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/control/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/control/MenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/controller/animation/AnimationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/controller/animation/AnimationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/controller/audio/SoundManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/controller/audio/SoundManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/controller/game/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/controller/game/BoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/controller/game/BrickRotator.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/controller/game/BrickRotator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/controller/game/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/controller/game/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/controller/input/InputHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/controller/input/InputHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/controller/state/GameStateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/controller/state/GameStateController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/controller/ui/BrickRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/controller/ui/BrickRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/controller/ui/ColorScheme.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/controller/ui/ColorScheme.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/controller/ui/GameSetupManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/controller/ui/GameSetupManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/controller/ui/GameViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/controller/ui/GameViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/controller/ui/GridRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/controller/ui/GridRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/event/ClearRow.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/event/ClearRow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/event/DownData.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/event/DownData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/event/EventSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/event/EventSource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/event/EventType.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/event/EventType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/event/GameMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/event/GameMode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/event/InputEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/event/InputEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/event/MoveEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/event/MoveEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/model/board/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/model/board/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/model/board/Score.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/model/board/Score.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/model/brick/Brick.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/model/brick/Brick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/model/brick/BrickGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/model/brick/BrickGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/model/brick/IBrick.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/model/brick/IBrick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/model/brick/JBrick.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/model/brick/JBrick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/model/brick/LBrick.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/model/brick/LBrick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/model/brick/OBrick.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/model/brick/OBrick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/model/brick/RandomBrickGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/model/brick/RandomBrickGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/model/brick/SBrick.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/model/brick/SBrick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/model/brick/TBrick.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/model/brick/TBrick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/model/brick/ZBrick.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/model/brick/ZBrick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/util/HighScoreManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/util/HighScoreManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/util/MatrixOperations.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/util/MatrixOperations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/view/GameOverPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/view/GameOverPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/view/NextShapeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/view/NextShapeInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/view/NotificationPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/view/NotificationPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/view/PauseMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/view/PauseMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/comp2042/game/view/ViewData.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/java/com/comp2042/game/view/ViewData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/MainMenu.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/MainMenu.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/NormalMode.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/NormalMode.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/ZenMode.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/ZenMode.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/determination.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/determination.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/gameLayout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/gameLayout.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/mainMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/menu_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/menu_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/button_click.wav" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/button_click.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/clear_row.wav" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/clear_row.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/gameover.wav" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/gameover.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/gameover_music.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/gameover_music.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/hard_drop.wav" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/hard_drop.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/hold_piece.wav" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/hold_piece.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/level_up.wav" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/level_up.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/menu_music.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/menu_music.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/normal_music_1.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/normal_music_1.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/normal_music_2.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/normal_music_2.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/normal_music_3.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/normal_music_3.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/normal_music_4.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/normal_music_4.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/normal_music_5.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/normal_music_5.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/normal_music_6.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/normal_music_6.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/zen_clear.wav" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/zen_clear.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/zen_music_1.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/zen_music_1.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/zen_music_2.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/zen_music_2.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sounds/zen_music_3.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/sounds/zen_music_3.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/window_style.css" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/main/resources/window_style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/controller/animation/AnimationManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/controller/animation/AnimationManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/controller/audio/SoundManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/controller/audio/SoundManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/controller/game/BoardControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/controller/game/BoardControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/controller/game/BrickRotatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/controller/game/BrickRotatorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/controller/game/GameControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/controller/game/GameControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/controller/input/InputHandlerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/controller/input/InputHandlerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/controller/state/GameStateControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/controller/state/GameStateControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/controller/ui/ColorSchemeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/controller/ui/ColorSchemeTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/event/EventClassesTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/event/EventClassesTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/model/board/ScoreTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/model/board/ScoreTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/model/brick/BrickTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/model/brick/BrickTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/model/brick/RandomBrickGeneratorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/model/brick/RandomBrickGeneratorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/util/HighScoreManagerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/util/HighScoreManagerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/util/MatrixOperationsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/util/MatrixOperationsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/view/NextShapeInfoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/view/NextShapeInfoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/comp2042/game/view/ViewDataTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test/java/com/comp2042/game/view/ViewDataTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Brandonccj&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Brandonccj/CW2025&quot;,
+    &quot;accountId&quot;: &quot;9d6d5667-a205-4718-ac11-8661b091dc06&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="34juWkw1y1cbxyB9TgNUTicBdmc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.AnimationManagerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AnimationManagerTest.testStartTime.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BrickRotatorTest.testRotationCycle.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.ColorSchemeTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MatrixOperationsTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RandomBrickGeneratorTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ScoreTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.test in CW2025.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.CW2025 [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.CW2025 [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.CW2025 [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.CW2025 [org.codehaus.mojo:exec-maven-plugin:3.1.0:java].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.CW2025 [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.CW2025 [test].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.CW2025 [validate].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/brand/Desktop/java/CW2025-master/ChongChengJun_IntelliJ_JDK23&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.50229883&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\brand\Desktop\java\CW2025-master\ChongChengJun_IntelliJ_JDK23" />
+      <recent name="C:\Users\brand\Desktop\java\CW2025-master\src\test\java" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\brand\Desktop\java\CW2025-master\ChongChengJun_IntelliJ_JDK23" />
+      <recent name="C:\Users\brand\Desktop\java\CW2025-master\src\test\java\java\com\comp2042\game\model" />
+      <recent name="C:\Users\brand\Desktop\java\CW2025-master\src\test\java\java\com\comp2042\game\model\" />
+      <recent name="C:\Users\brand\Desktop\java\CW2025-master\src\test\java\java\com\comp2042\game\model\board" />
+      <recent name="C:\Users\brand\Desktop\java\CW2025-master\src\main\resources" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.comp2042" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.test in CW2025">
+    <configuration name="AnimationManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="CW2025" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.comp2042.game.controller.animation.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.comp2042.game.controller.animation" />
+      <option name="MAIN_CLASS_NAME" value="com.comp2042.game.controller.animation.AnimationManagerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AnimationManagerTest.testStartTime" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="CW2025" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.comp2042.game.controller.animation.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.comp2042.game.controller.animation" />
+      <option name="MAIN_CLASS_NAME" value="com.comp2042.game.controller.animation.AnimationManagerTest" />
+      <option name="METHOD_NAME" value="testStartTime" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test in CW2025" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="CW2025" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/ChongChengJun_IntelliJ_JDK23/src/test" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.test in CW2025" />
+        <item itemvalue="JUnit.AnimationManagerTest" />
+        <item itemvalue="JUnit.AnimationManagerTest.testStartTime" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b4d3eea1-6580-4c4c-8cbb-5ae59386c68b" name="Changes" comment="" />
+      <created>1761739337583</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761739337583</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Initial commit">
+      <option name="closed" value="true" />
+      <created>1761740487812</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1761740487812</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Change the brick generating place">
+      <option name="closed" value="true" />
+      <created>1761741205219</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1761741205219</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fixed importing certain classes">
+      <option name="closed" value="true" />
+      <created>1761741635229</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1761741635229</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added next brick preview and instant dropping of bricks">
+      <option name="closed" value="true" />
+      <created>1761795653859</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1761795653859</updated>
+    </task>
+    <task id="LOCAL-00005" summary="change branch name">
+      <option name="closed" value="true" />
+      <created>1761796564217</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1761796564217</updated>
+    </task>
+    <task id="LOCAL-00006" summary="change branch name">
+      <option name="closed" value="true" />
+      <created>1761796623910</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1761796623910</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Implemented 7-bag randomizer for brick generator for fairer gameplay">
+      <option name="closed" value="true" />
+      <created>1762836841335</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1762836841335</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Changed the random brick generating logic and updated the next brick preview to have 3">
+      <option name="closed" value="true" />
+      <created>1762853551173</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1762853551173</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Updated layout of the playing field and made preparations for the hold function for game features">
+      <option name="closed" value="true" />
+      <created>1763436634522</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1763436634522</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Implemented hold function">
+      <option name="closed" value="true" />
+      <created>1763439097013</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1763439097013</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Added a high score function a txt file to score the high score. Also added time display to show how long the player has played.">
+      <option name="closed" value="true" />
+      <created>1763450525973</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1763450525973</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Added a feature that tracks the lines player cleared, and a level system that decreases block dropping speed everytime the player cleares 5 lines">
+      <option name="closed" value="true" />
+      <created>1763454457402</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1763454457402</updated>
+    </task>
+    <task id="LOCAL-00013" summary="highscore text file commit">
+      <option name="closed" value="true" />
+      <created>1763454643349</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1763454643349</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Changed the font of most texts and fixed a bug where creating a new game wouldnt make the next brick generate and the brick wouldnt fall normally">
+      <option name="closed" value="true" />
+      <created>1763455808850</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1763455808850</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Font file">
+      <option name="closed" value="true" />
+      <created>1763455862003</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1763455862003</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Changed the game over screen">
+      <option name="closed" value="true" />
+      <created>1763542340879</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1763542340879</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Created a main menu and pause menu">
+      <option name="closed" value="true" />
+      <created>1763608733651</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1763608733651</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Added a new game mode called zen mode">
+      <option name="closed" value="true" />
+      <created>1763623277130</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1763623277130</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Updated the refresh brick and ghost piece functions to make the game look cleaner">
+      <option name="closed" value="true" />
+      <created>1763689388846</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1763689388846</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Updated the game so that players cannot hold down the space key to infinitely drop bricks">
+      <option name="closed" value="true" />
+      <created>1763689845590</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1763689845590</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Added music and sound effects to the game. Included option for players to mute or unmute the music/sfx">
+      <option name="closed" value="true" />
+      <created>1763710591138</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1763710591138</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Removed debugging messages">
+      <option name="closed" value="true" />
+      <created>1763711180556</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1763711180556</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Gave UI an overhaul with a different style">
+      <option name="closed" value="true" />
+      <created>1763793971499</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1763793971499</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Cleaned up some code">
+      <option name="closed" value="true" />
+      <created>1763794487669</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1763794487669</updated>
+    </task>
+    <task id="LOCAL-00025" summary="refactor: reorganize entire project with package-based architecture&#10;&#10;Split controllers into domain-specific packages &#10;Extracted rendering logic into specialized classes&#10;Applied Single Responsibility Principle throughout codebase&#10;Added basic comments to the code">
+      <option name="closed" value="true" />
+      <created>1763881708347</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1763881708347</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Updated music and sound effects">
+      <option name="closed" value="true" />
+      <created>1763896868084</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1763896868084</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Fixed few bugs">
+      <option name="closed" value="true" />
+      <created>1763986537403</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1763986537403</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Fixed a bug">
+      <option name="closed" value="true" />
+      <created>1764072302419</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1764072302419</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Created meaningful Junit tests to test classes and methods">
+      <option name="closed" value="true" />
+      <created>1764384182501</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1764384182501</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added next brick preview and instant dropping of bricks" />
+    <MESSAGE value="change branch name" />
+    <MESSAGE value="Implemented 7-bag randomizer for brick generator for fairer gameplay" />
+    <MESSAGE value="Changed the random brick generating logic and updated the next brick preview to have 3" />
+    <MESSAGE value="Updated layout of the playing field and made preparations for the hold function for game features" />
+    <MESSAGE value="Implemented hold function" />
+    <MESSAGE value="Added a high score function a txt file to score the high score. Also added time display to show how long the player has played." />
+    <MESSAGE value="Added a feature that tracks the lines player cleared, and a level system that decreases block dropping speed everytime the player cleares 5 lines" />
+    <MESSAGE value="highscore text file commit" />
+    <MESSAGE value="Changed the font of most texts and fixed a bug where creating a new game wouldnt make the next brick generate and the brick wouldnt fall normally" />
+    <MESSAGE value="Font file" />
+    <MESSAGE value="Changed the game over screen" />
+    <MESSAGE value="Created a main menu and pause menu" />
+    <MESSAGE value="Added a new game mode called zen mode" />
+    <MESSAGE value="Updated the refresh brick and ghost piece functions to make the game look cleaner" />
+    <MESSAGE value="Updated the game so that players cannot hold down the space key to infinitely drop bricks" />
+    <MESSAGE value="Added music and sound effects to the game. Included option for players to mute or unmute the music/sfx" />
+    <MESSAGE value="Removed debugging messages" />
+    <MESSAGE value="Gave UI an overhaul with a different style" />
+    <MESSAGE value="Cleaned up some code" />
+    <MESSAGE value="refactor: reorganize entire project with package-based architecture&#10;&#10;Split controllers into domain-specific packages &#10;Extracted rendering logic into specialized classes&#10;Applied Single Responsibility Principle throughout codebase&#10;Added basic comments to the code" />
+    <MESSAGE value="Updated music and sound effects" />
+    <MESSAGE value="Fixed few bugs" />
+    <MESSAGE value="Fixed a bug" />
+    <MESSAGE value="Created meaningful Junit tests to test classes and methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created meaningful Junit tests to test classes and methods" />
+  </component>
+</project>
