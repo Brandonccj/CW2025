@@ -14,6 +14,12 @@ public class HighScoreManager {
     private HighScoreManager() {
     }
 
+    /**
+     * Loads the high score from file.
+     * Returns 0 if file doesn't exist or cannot be read.
+     *
+     * @return the saved high score, or 0 if unable to load
+     */
     public static int loadHighScore() {
         try {
             if (Files.exists(Paths.get(HIGH_SCORE_FILE))) {
@@ -26,6 +32,11 @@ public class HighScoreManager {
         return 0;
     }
 
+    /**
+     * Saves the high score to file.
+     *
+     * @param score the high score to save
+     */
     public static void saveHighScore(int score) {
         try {
             Files.writeString(Paths.get(HIGH_SCORE_FILE), String.valueOf(score));

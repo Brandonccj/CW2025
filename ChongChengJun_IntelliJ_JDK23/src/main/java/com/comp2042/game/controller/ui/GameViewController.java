@@ -40,6 +40,20 @@ public class GameViewController {
     private int highScore = HighScoreManager.loadHighScore();
     private SoundManager soundManager;
 
+    /**
+     * Creates a new game view controller without timer label.
+     *
+     * @param gamePanel the main game grid panel
+     * @param nextBrickGrid the next brick preview grid
+     * @param heldBrickGrid the held brick display grid
+     * @param groupNotification the notification group for score popups
+     * @param scoreLabel the score display label
+     * @param highScoreLabel the high score display label
+     * @param levelLabel the level display label
+     * @param linesLabel the lines cleared display label
+     * @param musicStatusLabel the music on/off status label
+     * @param sfxStatusLabel the sound effects on/off status label
+     */
     public GameViewController(GridPane gamePanel, GridPane nextBrickGrid, GridPane heldBrickGrid,
                               Group groupNotification, Label scoreLabel, Label highScoreLabel,
                               Label levelLabel, Label linesLabel, Label musicStatusLabel,
@@ -63,7 +77,21 @@ public class GameViewController {
         this.setupManager = new GameSetupManager(gamePanel, highScoreLabel, linesLabel, levelLabel);
     }
 
-    // Constructor with timeLabel
+    /**
+     * Creates a new game view controller with timer label.
+     *
+     * @param gamePanel the main game grid panel
+     * @param nextBrickGrid the next brick preview grid
+     * @param heldBrickGrid the held brick display grid
+     * @param groupNotification the notification group for score popups
+     * @param scoreLabel the score display label
+     * @param highScoreLabel the high score display label
+     * @param levelLabel the level display label
+     * @param linesLabel the lines cleared display label
+     * @param timeLabel the elapsed time display label
+     * @param musicStatusLabel the music on/off status label
+     * @param sfxStatusLabel the sound effects on/off status label
+     */
     public GameViewController(GridPane gamePanel, GridPane nextBrickGrid, GridPane heldBrickGrid,
                               Group groupNotification, Label scoreLabel, Label highScoreLabel,
                               Label levelLabel, Label linesLabel, Label timeLabel,
@@ -85,6 +113,14 @@ public class GameViewController {
         this.setupManager = new GameSetupManager(gamePanel, highScoreLabel, linesLabel, levelLabel);
     }
 
+    /**
+     * Initializes the game view with initial state.
+     * Sets up renderers, game mode styling, and display matrices.
+     *
+     * @param boardMatrix the initial board matrix
+     * @param brick the initial brick data
+     * @param mode the game mode (NORMAL or ZEN)
+     */
     public void initGameView(int[][] boardMatrix, ViewData brick, GameMode mode) {
         this.currentGameMode = mode;
 
@@ -109,6 +145,12 @@ public class GameViewController {
         });
     }
 
+    /**
+     * Updates the brick display with new position and data.
+     * Also updates preview grids and held brick display.
+     *
+     * @param brick the updated brick view data
+     */
     public void refreshBrick(ViewData brick) {
         brickRenderer.refreshBrick(brick, this::getFillColor, this::getGhostColor, currentGameMode);
         gridRenderer.updatePreviewGrid(brick.getNextBricksData(), this::getFillColor);
@@ -119,6 +161,11 @@ public class GameViewController {
         brickRenderer.refreshGameBackground(board, this::getFillColor);
     }
 
+    /**
+     * Displays an animated score notification when rows are cleared.
+     *
+     * @param clearRow the clear row data containing score bonus
+     */
     public void showClearRowNotification(ClearRow clearRow) {
         if (clearRow != null && clearRow.getLinesRemoved() > 0) {
             soundManager.playSound("clear_row");
@@ -128,6 +175,9 @@ public class GameViewController {
         }
     }
 
+    /**
+     * Displays a special notification when the board is cleared in Zen mode.
+     */
     public void showZenClearNotification() {
         soundManager.playSound("zen_clear");
         NotificationPanel zenNotif = new NotificationPanel("BOARD CLEARED!");
@@ -145,6 +195,11 @@ public class GameViewController {
         return ColorScheme.getGhostColor(colorCode, currentGameMode);
     }
 
+    /**
+     * Binds the score property to the score label and tracks high score updates.
+     *
+     * @param integerProperty the score property to bind
+     */
     public void bindScore(IntegerProperty integerProperty) {
         scoreLabel.textProperty().bind(integerProperty.asString("Score: %d"));
         integerProperty.addListener((obs, oldVal, newVal) -> {
@@ -152,6 +207,12 @@ public class GameViewController {
         });
     }
 
+    /**
+     * Binds the lines cleared property to update the lines label display.
+     * Formats differently based on game mode (with/without level target).
+     *
+     * @param linesProperty the lines cleared property to bind
+     */
     public void bindLines(IntegerProperty linesProperty) {
         linesProperty.addListener((obs, oldVal, newVal) -> {
             int totalLines = newVal.intValue();
@@ -166,6 +227,11 @@ public class GameViewController {
         });
     }
 
+    /**
+     * Updates and persists the high score if current score exceeds it.
+     *
+     * @param currentScore the current game score
+     */
     private void updateHighScore(int currentScore) {
         if (currentScore > highScore) {
             highScore = currentScore;
@@ -174,6 +240,9 @@ public class GameViewController {
         }
     }
 
+    /**
+     * Updates the music status label to show current on/off state with styling.
+     */
     public void updateMusicStatusLabel() {
         boolean isEnabled = soundManager.isMusicEnabled();
         musicStatusLabel.setText("Music: " + (isEnabled ? "ON" : "OFF"));
@@ -187,6 +256,9 @@ public class GameViewController {
         }
     }
 
+    /**
+     * Updates the sound effects status label to show current on/off state with styling.
+     */
     public void updateSfxStatusLabel() {
         boolean isEnabled = soundManager.isSfxEnabled();
         sfxStatusLabel.setText("SFX: " + (isEnabled ? "ON" : "OFF"));
@@ -203,6 +275,11 @@ public class GameViewController {
         levelLabel.setText(String.valueOf(level));
     }
 
+    /**
+     * Updates the timer label with formatted elapsed time.
+     *
+     * @param timeString the formatted time string (m:ss)
+     */
     public void updateTimerLabel(String timeString) {
         if (timeLabel != null) {
             Platform.runLater(() -> timeLabel.setText("Time: " + timeString));

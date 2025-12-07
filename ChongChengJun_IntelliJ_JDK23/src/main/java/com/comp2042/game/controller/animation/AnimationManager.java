@@ -47,6 +47,10 @@ public class AnimationManager {
         this.soundManager = SoundManager.getInstance();
     }
 
+    /**
+     * Starts the main game timeline and timer.
+     * Initiates automatic brick dropping and time tracking.
+     */
     public void startGameTimeline() {
         timeLine = new Timeline(new KeyFrame(
                 Duration.millis(BASE_SPEED),
@@ -64,23 +68,38 @@ public class AnimationManager {
         timerTimeline.play();
     }
 
+    /**
+     * Stops all running timelines (game loop, timer, instant drop).
+     */
     public void stopAllTimelines() {
         if (timeLine != null) timeLine.stop();
         if (timerTimeline != null) timerTimeline.stop();
         if (instantDropTimeline != null) instantDropTimeline.stop();
     }
 
+    /**
+     * Pauses all active timelines without stopping them.
+     */
     public void pauseTimelines() {
         if (timeLine != null) timeLine.pause();
         if (timerTimeline != null) timerTimeline.pause();
         if (instantDropTimeline != null) instantDropTimeline.stop();
     }
 
+    /**
+     * Resumes all paused timelines.
+     */
     public void resumeTimelines() {
         if (timeLine != null) timeLine.play();
         if (timerTimeline != null) timerTimeline.play();
     }
 
+    /**
+     * Moves the current brick down by one row.
+     * Handles collision detection and line clearing.
+     *
+     * @param event the move event containing source information
+     */
     public void moveDown(MoveEvent event) {
         if (isPause.getValue() == Boolean.FALSE) {
             DownData downData = eventListener.onDownEvent(event);
@@ -90,6 +109,10 @@ public class AnimationManager {
         viewController.getGamePanel().requestFocus();
     }
 
+    /**
+     * Performs an instant drop of the current brick to the bottom.
+     * Uses a rapid timeline animation to simulate fast dropping.
+     */
     public void instantDrop() {
         if (isPause.getValue() || isDropping) return;
 
@@ -118,6 +141,10 @@ public class AnimationManager {
         instantDropTimeline.play();
     }
 
+    /**
+     * Updates the game timer display with elapsed time.
+     * Calculates and formats time as minutes:seconds.
+     */
     private void updateTimer() {
         // Calculate elapsed time
         long elapsed = (System.currentTimeMillis() - startTime) / 1000;
@@ -129,6 +156,12 @@ public class AnimationManager {
         viewController.updateTimerLabel(timeString);
     }
 
+    /**
+     * Increases the game level and adjusts brick drop speed.
+     * Displays level up notification and plays level up sound.
+     *
+     * @param newLevel the new level number
+     */
     public void levelUp(int newLevel) {
         currentLevel = newLevel;
         viewController.updateLevelLabel(newLevel);

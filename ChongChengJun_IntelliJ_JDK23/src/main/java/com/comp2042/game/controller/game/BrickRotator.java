@@ -12,6 +12,11 @@ public class BrickRotator {
     private Brick brick;
     private int currentShape = 0;
 
+    /**
+     * Calculates the next rotation state of the current brick.
+     *
+     * @return NextShapeInfo containing the rotated shape matrix and position index
+     */
     public NextShapeInfo getNextShape() {
         int nextShape = currentShape;
         nextShape = (++nextShape) % brick.getShapeMatrix().size();
@@ -26,6 +31,11 @@ public class BrickRotator {
         this.currentShape = currentShape;
     }
 
+    /**
+     * Sets a new brick and resets rotation state to initial position.
+     *
+     * @param brick the new brick to set
+     */
     public void setBrick(Brick brick) {
         this.brick = brick;
         currentShape = 0;

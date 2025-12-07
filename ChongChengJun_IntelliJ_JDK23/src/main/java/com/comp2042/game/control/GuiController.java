@@ -68,6 +68,15 @@ public class GuiController implements Initializable {
         gameOverPanel.setVisible(false);
     }
 
+
+    /**
+     * Initializes the game view with all necessary controllers and components.
+     * Sets up the game board, input handlers, animation manager, and state controller.
+     *
+     * @param boardMatrix the initial game board matrix
+     * @param brick the initial brick data
+     * @param mode the game mode (NORMAL or ZEN)
+     */
     public void initGameView(int[][] boardMatrix, ViewData brick, GameMode mode) {
 
         viewController = new GameViewController(
@@ -114,6 +123,11 @@ public class GuiController implements Initializable {
         animationManager.startGameTimeline();
     }
 
+
+    /**
+     * Sets up event handlers for all menu buttons (pause, restart, main menu).
+     * Connects button actions to appropriate state controller methods.
+     */
     private void setupButtonHandlers() {
         pauseMenu.getResumeButton().setOnAction(e -> {
             soundManager.playSound("button_click");
@@ -135,30 +149,61 @@ public class GuiController implements Initializable {
 
     // Delegation methods
 
+    /**
+     * Sets the event listener for handling game input events.
+     *
+     * @param eventListener the listener to receive game events
+     */
     public void setEventListener(InputEventListener eventListener) {
         this.eventListener = eventListener;
     }
 
+    /**
+     * Binds the score property to the UI score label.
+     *
+     * @param integerProperty the score property to bind
+     */
     public void bindScore(IntegerProperty integerProperty) {
         viewController.bindScore(integerProperty);
     }
 
+    /**
+     * Binds the lines cleared property to the UI lines label.
+     *
+     * @param linesProperty the lines cleared property to bind
+     */
     public void bindLines(IntegerProperty linesProperty) {
         viewController.bindLines(linesProperty);
     }
 
+    /**
+     * Refreshes the game board background display.
+     *
+     * @param board the updated board matrix
+     */
     public void refreshGameBackground(int[][] board) {
         viewController.refreshGameBackground(board);
     }
 
+    /**
+     * Triggers the game over sequence and displays the game over screen.
+     */
     public void gameOver() {
         stateController.gameOver();
     }
 
+    /**
+     * Handles level progression and displays level up notification.
+     *
+     * @param newLevel the new level number
+     */
     public void levelUp(int newLevel) {
         animationManager.levelUp(newLevel);
     }
 
+    /**
+     * Displays a notification when the board is cleared in Zen mode.
+     */
     public void showZenClearNotification() {
         viewController.showZenClearNotification();
     }

@@ -30,6 +30,14 @@ public class BoardController implements Board {
     private boolean hasSwapped = false;
     private final GameMode gameMode;
 
+    /**
+     * Creates a new board controller with specified dimensions and game mode.
+     * Initializes the board matrix, brick generator, and scoring system.
+     *
+     * @param width the width of the game board
+     * @param height the height of the game board
+     * @param mode the game mode (NORMAL or ZEN)
+     */
     public BoardController(int width, int height, GameMode mode) {
         this.gameMode = mode;
         currentGameMatrix = new int[width][height];
@@ -38,6 +46,11 @@ public class BoardController implements Board {
         score = new Score();
     }
 
+    /**
+     * Attempts to move the current brick down by one row.
+     *
+     * @return true if the move was successful, false if blocked
+     */
     @Override
     public boolean moveBrickDown() {
         int[][] currentMatrix = MatrixOperations.copy(currentGameMatrix);
@@ -53,6 +66,11 @@ public class BoardController implements Board {
         }
     }
 
+    /**
+     * Attempts to move the current brick left by one column.
+     *
+     * @return true if the move was successful, false if blocked
+     */
     @Override
     public boolean moveBrickLeft() {
         int[][] currentMatrix = MatrixOperations.copy(currentGameMatrix);
@@ -68,6 +86,11 @@ public class BoardController implements Board {
         }
     }
 
+    /**
+     * Attempts to move the current brick right by one column.
+     *
+     * @return true if the move was successful, false if blocked
+     */
     @Override
     public boolean moveBrickRight() {
         int[][] currentMatrix = MatrixOperations.copy(currentGameMatrix);
@@ -83,6 +106,12 @@ public class BoardController implements Board {
         }
     }
 
+    /**
+     * Attempts to rotate the current brick counter-clockwise.
+     * Implements wall kick system to allow rotation near boundaries.
+     *
+     * @return true if rotation was successful, false if blocked
+     */
     @Override
     public boolean rotateLeftBrick() {
         int[][] currentMatrix = MatrixOperations.copy(currentGameMatrix);
@@ -109,6 +138,11 @@ public class BoardController implements Board {
         return false;
     }
 
+    /**
+     * Creates and spawns a new brick at the top of the board.
+     *
+     * @return true if the new brick collides (game over), false otherwise
+     */
     @Override
     public boolean createNewBrick() {
         Brick currentBrick = brickGenerator.getBrick();
@@ -143,12 +177,21 @@ public class BoardController implements Board {
         );
     }
 
+    /**
+     * Merges the current brick into the board background matrix.
+     * Called when a brick can no longer move down.
+     */
     @Override
     public void mergeBrickToBackground() {
         currentGameMatrix = MatrixOperations.merge(currentGameMatrix, brickRotator.getCurrentShape(),
                 (int) currentOffset.getX(), (int) currentOffset.getY());
     }
 
+    /**
+     * Checks for and clears any complete rows.
+     *
+     * @return ClearRow object containing cleared row information and score bonus
+     */
     @Override
     public ClearRow clearRows() {
         ClearRow clearRow = MatrixOperations.checkRemoving(currentGameMatrix);
@@ -161,6 +204,10 @@ public class BoardController implements Board {
         return score;
     }
 
+    /**
+     * Resets the board for a new game.
+     * Clears the board matrix, resets score, and spawns first brick.
+     */
     @Override
     public void newGame() {
         currentGameMatrix = new int[currentGameMatrix.length][currentGameMatrix[0].length];
@@ -168,6 +215,12 @@ public class BoardController implements Board {
         createNewBrick();
     }
 
+    /**
+     * Attempts to hold the current brick and swap with previously held brick.
+     * Can only be used once per brick placement.
+     *
+     * @return true if hold was successful, false if already used or collision
+     */
     @Override
     public boolean holdBrick() {
         if (hasSwapped) {
@@ -210,11 +263,21 @@ public class BoardController implements Board {
         return gameMode;
     }
 
+    /**
+     * Clears the entire game board matrix.
+     * Used in Zen mode when board fills up.
+     */
     @Override
     public void clearBoard() {
         currentGameMatrix = new int[currentGameMatrix.length][currentGameMatrix[0].length];
     }
 
+    /**
+     * Calculates the distance the current brick can drop before collision.
+     * Used for ghost piece rendering.
+     *
+     * @return the number of rows the brick can drop
+     */
     private int dropDistance() {
         int[][] matrix = MatrixOperations.copy(currentGameMatrix);
         int[][] shape = brickRotator.getCurrentShape();

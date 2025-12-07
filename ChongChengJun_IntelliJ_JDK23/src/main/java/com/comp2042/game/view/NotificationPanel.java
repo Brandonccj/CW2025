@@ -21,6 +21,12 @@ import javafx.util.Duration;
 
 public class NotificationPanel extends BorderPane {
 
+    /**
+     * Creates a notification panel with the specified text.
+     * Applies styling and glow effect.
+     *
+     * @param text the text to display in the notification
+     */
     public NotificationPanel(String text) {
         setMinHeight(200);
         setMinWidth(220);
@@ -33,6 +39,12 @@ public class NotificationPanel extends BorderPane {
 
     }
 
+    /**
+     * Displays the notification with fade and slide animation.
+     * Removes itself from the parent list when animation completes.
+     *
+     * @param list the observable list containing this notification
+     */
     public void showScore(ObservableList<Node> list) {
         FadeTransition ft = new FadeTransition(Duration.millis(2000), this);
         TranslateTransition tt = new TranslateTransition(Duration.millis(2500), this);

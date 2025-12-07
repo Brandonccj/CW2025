@@ -33,6 +33,11 @@ public class SoundManager {
         loadSoundEffects();
     }
 
+    /**
+     * Returns the singleton instance of SoundManager.
+     *
+     * @return the SoundManager instance
+     */
     public static SoundManager getInstance() {
         if (instance == null) {
             instance = new SoundManager();
@@ -40,6 +45,9 @@ public class SoundManager {
         return instance;
     }
 
+    /**
+     * Loads all sound effect files into memory.
+     */
     private void loadSoundEffects() {
         try {
             loadSound("button_click", "/sounds/button_click.wav");
@@ -54,6 +62,12 @@ public class SoundManager {
         }
     }
 
+    /**
+     * Loads a single sound effect from the specified path.
+     *
+     * @param name the identifier name for the sound
+     * @param path the resource path to the sound file
+     */
     private void loadSound(String name, String path) {
         try {
             URL resource = getClass().getResource(path);
@@ -69,6 +83,11 @@ public class SoundManager {
         }
     }
 
+    /**
+     * Plays a sound effect by name if sound effects are enabled.
+     *
+     * @param soundName the name of the sound effect to play
+     */
     public void playSound(String soundName) {
         if (!sfxEnabled) return;
 
@@ -78,6 +97,12 @@ public class SoundManager {
         }
     }
 
+    /**
+     * Plays a single music track on loop.
+     * Stops any currently playing music.
+     *
+     * @param musicPath the resource path to the music file
+     */
     public void playMusic(String musicPath) {
         stopMusic();
 
@@ -107,6 +132,14 @@ public class SoundManager {
         }
     }
 
+    /**
+     * Plays a playlist of music tracks.
+     * Supports shuffle mode and automatic track progression.
+     *
+     * @param playlistName the name of the playlist
+     * @param musicPaths list of resource paths to music files
+     * @param shuffle whether to shuffle the playlist
+     */
     public void playPlaylist(String playlistName, List<String> musicPaths, boolean shuffle) {
         if (musicPaths == null || musicPaths.isEmpty()) {
             System.err.println("Empty playlist provided");
@@ -131,6 +164,12 @@ public class SoundManager {
         // If music disabled, playlist info is stored and will play when enabled
     }
 
+    /**
+     * Plays a specific track from the current playlist.
+     * Sets up automatic progression to next track when finished.
+     *
+     * @param index the index of the track to play
+     */
     private void playTrackFromPlaylist(int index) {
         if (!musicEnabled || currentPlaylist.isEmpty()) return;
 
@@ -162,6 +201,10 @@ public class SoundManager {
         }
     }
 
+    /**
+     * Plays the next track in the playlist.
+     * Handles looping and reshuffling when reaching the end.
+     */
     private void playNextTrackInPlaylist() {
         if (currentPlaylist.isEmpty()) return;
 
@@ -207,6 +250,9 @@ public class SoundManager {
         currentPlaylist.clear();
     }
 
+    /**
+     * Stops all music playback and clears playlist information.
+     */
     public void stopMusic() {
         if (musicPlayer != null) {
             musicPlayer.stop();
@@ -231,6 +277,12 @@ public class SoundManager {
         }
     }
 
+    /**
+     * Enables or disables music playback.
+     * When enabled, resumes paused music or starts pending track.
+     *
+     * @param enabled true to enable music, false to disable
+     */
     public void setMusicEnabled(boolean enabled) {
         this.musicEnabled = enabled;
 

@@ -15,6 +15,11 @@ public class RandomBrickGenerator implements BrickGenerator {
     private final List<Brick> brickList;
     private final Deque<Brick> nextBricks = new ArrayDeque<>();
 
+    /**
+     * Creates a new random brick generator using the bag system.
+     * Initializes the brick list and pre-fills the bag with two sets of bricks.
+     */
+
     public RandomBrickGenerator() {
         brickList = new ArrayList<>();
         brickList.add(new IBrick());
@@ -28,12 +33,22 @@ public class RandomBrickGenerator implements BrickGenerator {
         fillBag();
     }
 
+    /**
+     * Fills the bag with a shuffled set of all 7 brick types.
+     * Ensures fair distribution of pieces over time.
+     */
     private void fillBag() {
         List<Brick> bag = new ArrayList<>(brickList);
         Collections.shuffle(bag);
         nextBricks.addAll(bag);
     }
 
+    /**
+     * Returns the next brick from the bag.
+     * Automatically refills the bag when running low.
+     *
+     * @return the next brick to use
+     */
     @Override
     public Brick getBrick() {
         if (nextBricks.size() <= 7) {
@@ -42,6 +57,12 @@ public class RandomBrickGenerator implements BrickGenerator {
         return nextBricks.poll();
     }
 
+    /**
+     * Returns a preview of upcoming bricks without removing them from the queue.
+     *
+     * @param count the number of bricks to preview
+     * @return list of upcoming bricks
+     */
     @Override
     public List<Brick> getNextBricks(int count) {
         while (nextBricks.size() < count) {

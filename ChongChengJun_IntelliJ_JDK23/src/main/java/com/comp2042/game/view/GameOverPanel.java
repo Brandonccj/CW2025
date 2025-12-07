@@ -23,6 +23,10 @@ public class GameOverPanel extends StackPane {
     private Button mainMenuButton;
     private final Rectangle background;
 
+    /**
+     * Creates a new game over panel with default stats.
+     * Initializes all UI components and styling.
+     */
     public GameOverPanel() {
         setPrefSize(350, 450);
         setMinSize(350, 450);
@@ -76,6 +80,14 @@ public class GameOverPanel extends StackPane {
         setVisible(true);
     }
 
+    /**
+     * Updates the displayed statistics with final game results.
+     *
+     * @param time the formatted time string
+     * @param score the final score
+     * @param highScore the high score to display
+     * @param lines the total lines cleared
+     */
     public void updateStats(String time, int score, int highScore, int lines) {
         timeLabel.setText("Time: " + time);
         scoreLabel.setText("Score: " + score);

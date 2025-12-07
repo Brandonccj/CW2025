@@ -10,6 +10,13 @@ import javafx.scene.paint.Paint;
  */
 public class ColorScheme {
 
+    /**
+     * Returns the appropriate brick color based on game mode and color code.
+     *
+     * @param colorCode the brick color code (1-7)
+     * @param mode the current game mode
+     * @return the Paint object for the specified color
+     */
     public static Paint getBrickColor(int colorCode, GameMode mode) {
         if (mode == GameMode.ZEN) {
             return getZenBrickColor(colorCode);
@@ -18,6 +25,13 @@ public class ColorScheme {
         }
     }
 
+    /**
+     * Returns the appropriate ghost/shadow color based on game mode and color code.
+     *
+     * @param colorCode the brick color code (1-7)
+     * @param mode the current game mode
+     * @return the Paint object for the ghost color
+     */
     public static Paint getGhostColor(int colorCode, GameMode mode) {
         if (mode == GameMode.ZEN) {
             return getZenGhostColor(colorCode);

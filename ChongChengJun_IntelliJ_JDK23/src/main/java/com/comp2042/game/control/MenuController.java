@@ -35,6 +35,13 @@ public class MenuController implements Initializable {
 
     private SoundManager soundManager;
 
+    /**
+     * Initializes the menu controller.
+     * Starts menu music and sets up keyboard handlers for audio toggles.
+     *
+     * @param location the location used to resolve relative paths
+     * @param resources the resources used to localize the root object
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         soundManager = SoundManager.getInstance();
@@ -76,6 +83,9 @@ public class MenuController implements Initializable {
         });
     }
 
+    /**
+     * Updates the music status label to reflect current music on/off state.
+     */
     private void updateMusicStatusLabel() {
         boolean isEnabled = soundManager.isMusicEnabled();
         musicStatusLabel.setText("Music: " + (isEnabled ? "ON" : "OFF"));
@@ -88,6 +98,9 @@ public class MenuController implements Initializable {
         }
     }
 
+    /**
+     * Updates the sound effects status label to reflect current SFX on/off state.
+     */
     private void updateSfxStatusLabel() {
         boolean isEnabled = soundManager.isSfxEnabled();
         sfxStatusLabel.setText("SFX: " + (isEnabled ? "ON" : "OFF"));
@@ -100,18 +113,30 @@ public class MenuController implements Initializable {
         }
     }
 
+    /**
+     * Starts a new game in Normal mode.
+     */
     @FXML
     private void startNormalMode() {
         soundManager.playSound("button_click");
         startGame(GameMode.NORMAL);
     }
 
+    /**
+     * Starts a new game in Zen mode.
+     */
     @FXML
     private void startZenMode() {
         soundManager.playSound("button_click");
         startGame(GameMode.ZEN);
     }
 
+    /**
+     * Initializes and starts a game with the specified mode.
+     * Loads the game layout and creates the game controller.
+     *
+     * @param mode the game mode to start (NORMAL or ZEN)
+     */
     private void startGame(GameMode mode) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gameLayout.fxml"));

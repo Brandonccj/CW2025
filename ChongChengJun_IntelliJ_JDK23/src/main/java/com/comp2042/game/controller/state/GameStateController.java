@@ -39,6 +39,14 @@ public class GameStateController {
     private InputEventListener eventListener;
     private SoundManager soundManager;
 
+    /**
+     * Creates a new game state controller with UI overlay references.
+     *
+     * @param pauseOverlay the pause menu overlay pane
+     * @param gameOverOverlay the game over screen overlay pane
+     * @param pauseMenu the pause menu component
+     * @param gameOverPanel the game over panel component
+     */
     public GameStateController(StackPane pauseOverlay, StackPane gameOverOverlay,
                                PauseMenu pauseMenu, GameOverPanel gameOverPanel) {
         this.pauseOverlay = pauseOverlay;
@@ -48,12 +56,25 @@ public class GameStateController {
         this.soundManager = SoundManager.getInstance();
     }
 
+    /**
+     * Sets the controller dependencies after construction.
+     * Required because of circular dependency with other controllers.
+     *
+     * @param animationManager the animation manager
+     * @param viewController the view controller
+     * @param eventListener the input event listener
+     */
     public void setDependencies(AnimationManager animationManager, GameViewController viewController,
                                 InputEventListener eventListener) {
         this.animationManager = animationManager;
         this.viewController = viewController;
         this.eventListener = eventListener;
     }
+
+    /**
+     * Toggles between paused and playing states.
+     * Does nothing if game is over.
+     */
 
     public void togglePause() {
         if (isGameOver.getValue()) return;
@@ -65,6 +86,9 @@ public class GameStateController {
         }
     }
 
+    /**
+     * Pauses the game, stops timelines, and displays pause menu.
+     */
     public void pauseGame() {
         isPause.setValue(Boolean.TRUE);
         animationManager.pauseTimelines();
@@ -77,6 +101,9 @@ public class GameStateController {
         viewController.getGamePanel().requestFocus();
     }
 
+    /**
+     * Resumes the game, restarts timelines, and hides pause menu.
+     */
     public void resumeGame() {
         isPause.setValue(Boolean.FALSE);
         animationManager.resumeTimelines();
@@ -88,6 +115,10 @@ public class GameStateController {
         viewController.getGamePanel().requestFocus();
     }
 
+    /**
+     * Handles game over sequence.
+     * Stops timelines, plays game over sound/music, and displays final statistics.
+     */
     public void gameOver() {
         animationManager.stopAllTimelines();
         isGameOver.setValue(Boolean.TRUE);
@@ -134,6 +165,10 @@ public class GameStateController {
         }
     }
 
+    /**
+     * Starts a completely new game.
+     * Resets all state, creates new board, and restarts music.
+     */
     public void newGame() {
         animationManager.stopAllTimelines();
         animationManager.setDropping(false);
@@ -158,6 +193,10 @@ public class GameStateController {
         viewController.getGamePanel().requestFocus();
     }
 
+    /**
+     * Restarts the current game without returning to menu.
+     * Resets board and timelines while maintaining game mode.
+     */
     public void restartGame() {
         animationManager.stopAllTimelines();
         animationManager.setDropping(false);
@@ -180,6 +219,9 @@ public class GameStateController {
         viewController.getGamePanel().requestFocus();
     }
 
+    /**
+     * Restarts the appropriate music playlist based on current game mode.
+     */
     private void restartGameMusic() {
         GameMode mode = viewController.getCurrentGameMode();
         if (mode == GameMode.ZEN) {
@@ -201,6 +243,11 @@ public class GameStateController {
             soundManager.playPlaylist("normal_mode", normalPlaylist, true);
         }
     }
+
+    /**
+     * Returns to the main menu screen.
+     * Stops all game activity and switches to menu scene.
+     */
 
     public void returnToMainMenu() {
         try {

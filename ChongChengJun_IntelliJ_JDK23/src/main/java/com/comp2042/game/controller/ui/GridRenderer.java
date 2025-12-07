@@ -18,11 +18,21 @@ public class GridRenderer {
     private final GridPane nextBrickGrid;
     private final GridPane heldBrickGrid;
 
+    /**
+     * Creates a new grid renderer for preview and hold grids.
+     *
+     * @param nextBrickGrid the grid for showing upcoming bricks
+     * @param heldBrickGrid the grid for showing the held brick
+     */
     public GridRenderer(GridPane nextBrickGrid, GridPane heldBrickGrid) {
         this.nextBrickGrid = nextBrickGrid;
         this.heldBrickGrid = heldBrickGrid;
     }
 
+    /**
+     * Initializes the preview grid with empty transparent rectangles.
+     * Creates a 15x5 grid for displaying up to 3 upcoming bricks.
+     */
     public void initPreviewGrid() {
         nextBrickGrid.getChildren().clear();
         for (int row = 0; row < 15; row++) {
@@ -36,6 +46,10 @@ public class GridRenderer {
         }
     }
 
+    /**
+     * Initializes the hold grid with empty transparent rectangles.
+     * Creates a 4x4 grid for displaying the held brick.
+     */
     public void initHoldGrid() {
         heldBrickGrid.getChildren().clear();
         for (int r = 0; r < 4; r++) {
@@ -49,6 +63,13 @@ public class GridRenderer {
         }
     }
 
+    /**
+     * Updates the preview grid with upcoming brick data.
+     * Centers each brick within its display area.
+     *
+     * @param nextBricks list of upcoming brick matrices
+     * @param colorMapper function to map color codes to Paint objects
+     */
     public void updatePreviewGrid(List<int[][]> nextBricks, Function<Integer, Paint> colorMapper) {
         for (javafx.scene.Node node : nextBrickGrid.getChildren()) {
             ((Rectangle) node).setFill(Color.TRANSPARENT);
@@ -92,6 +113,13 @@ public class GridRenderer {
         }
     }
 
+    /**
+     * Updates the hold grid with the currently held brick.
+     * Centers the brick within the 4x4 grid.
+     *
+     * @param heldBrick the held brick matrix, or null if no brick is held
+     * @param colorMapper function to map color codes to Paint objects
+     */
     public void updateHoldGrid(int[][] heldBrick, Function<Integer, Paint> colorMapper) {
         for (int i = 0; i < heldBrickGrid.getChildren().size(); i++) {
             Rectangle cell = (Rectangle) heldBrickGrid.getChildren().get(i);
@@ -119,6 +147,14 @@ public class GridRenderer {
         }
     }
 
+    /**
+     * Retrieves the rectangle at the specified grid position.
+     *
+     * @param grid the grid pane to search
+     * @param col the column index
+     * @param row the row index
+     * @return the Rectangle at the specified position, or null if not found
+     */
     private Rectangle getRectangleAt(GridPane grid, int col, int row) {
         for (javafx.scene.Node node : grid.getChildren()) {
             Integer nodeCol = GridPane.getColumnIndex(node);

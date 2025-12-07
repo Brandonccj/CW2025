@@ -28,6 +28,16 @@ public class InputHandler {
     private BooleanProperty isPause;
     private BooleanProperty isGameOver;
 
+    /**
+     * Creates a new input handler with references to all necessary controllers.
+     *
+     * @param eventListener the listener for game input events
+     * @param viewController the view controller for UI updates
+     * @param animationManager the animation manager for timeline control
+     * @param stateController the state controller for game state changes
+     * @param isPause the pause state property
+     * @param isGameOver the game over state property
+     */
     public InputHandler(InputEventListener eventListener, GameViewController viewController,
                         AnimationManager animationManager, GameStateController stateController,
                         BooleanProperty isPause, BooleanProperty isGameOver) {
@@ -40,6 +50,12 @@ public class InputHandler {
         this.soundManager = SoundManager.getInstance();
     }
 
+    /**
+     * Sets up keyboard event handlers for the game panel.
+     * Configures key press and release listeners.
+     *
+     * @param gamePanel the game panel to attach handlers to
+     */
     public void setupKeyHandlers(GridPane gamePanel) {
         gamePanel.setFocusTraversable(true);
         gamePanel.requestFocus();
@@ -47,6 +63,12 @@ public class InputHandler {
         gamePanel.setOnKeyReleased(createKeyReleasedHandler());
     }
 
+    /**
+     * Creates the key pressed event handler.
+     * Routes input to appropriate handlers based on game state.
+     *
+     * @return the configured EventHandler for key press events
+     */
     private EventHandler<KeyEvent> createKeyPressedHandler() {
         return keyEvent -> {
             // Global controls (work anytime)
@@ -82,6 +104,12 @@ public class InputHandler {
         };
     }
 
+    /**
+     * Handles gameplay-specific keyboard input (movement, rotation, drop).
+     * Only processes input when game is not paused or over.
+     *
+     * @param keyEvent the keyboard event to process
+     */
     private void handleGameplayInput(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.LEFT || keyEvent.getCode() == KeyCode.A) {
             viewController.refreshBrick(eventListener.onLeftEvent(
@@ -117,6 +145,12 @@ public class InputHandler {
         }
     }
 
+    /**
+     * Creates the key released event handler.
+     * Primarily handles space key release for instant drop.
+     *
+     * @return the configured EventHandler for key release events
+     */
     private EventHandler<KeyEvent> createKeyReleasedHandler() {
         return keyEvent -> {
             if (keyEvent.getCode() == KeyCode.SPACE) {

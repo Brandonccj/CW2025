@@ -22,6 +22,12 @@ public class BrickRenderer {
     private Rectangle[][] rectangles;
     private Rectangle[][] shadowRectangles;
 
+    /**
+     * Creates a new brick renderer for the specified game panel.
+     * Initializes shadow rectangle arrays for ghost piece rendering.
+     *
+     * @param gamePanel the grid pane to render bricks on
+     */
     public BrickRenderer(GridPane gamePanel) {
         this.gamePanel = gamePanel;
 
@@ -38,6 +44,12 @@ public class BrickRenderer {
         }
     }
 
+    /**
+     * Initializes the display matrix for the game board background.
+     * Creates rectangle objects for each cell of the visible board area.
+     *
+     * @param boardMatrix the board matrix to create display for
+     */
     public void initializeDisplayMatrix(int[][] boardMatrix) {
         displayMatrix = new Rectangle[boardMatrix.length][boardMatrix[0].length];
         for (int i = 2; i < boardMatrix.length; i++) {
@@ -50,6 +62,12 @@ public class BrickRenderer {
         }
     }
 
+    /**
+     * Initializes rectangle objects for rendering the current brick.
+     *
+     * @param brick the brick view data
+     * @param colorMapper function to map color codes to Paint objects
+     */
     public void initializeBrickRectangles(ViewData brick, Function<Integer, Paint> colorMapper) {
         rectangles = new Rectangle[brick.getBrickData().length][brick.getBrickData()[0].length];
         for (int i = 0; i < brick.getBrickData().length; i++) {
@@ -61,6 +79,15 @@ public class BrickRenderer {
         }
     }
 
+    /**
+     * Updates the brick rendering with new position and color.
+     * Also updates the ghost/shadow piece position.
+     *
+     * @param brick the updated brick view data
+     * @param colorMapper function to map brick color codes
+     * @param ghostColorMapper function to map ghost/shadow color codes
+     * @param gameMode the current game mode
+     */
     public void refreshBrick(ViewData brick, Function<Integer, Paint> colorMapper,
                              Function<Integer, Paint> ghostColorMapper, GameMode gameMode) {
         // Clear old brick
@@ -90,6 +117,12 @@ public class BrickRenderer {
         updateShadow(brick, ghostColorMapper);
     }
 
+    /**
+     * Updates the ghost/shadow piece rendering showing drop position.
+     *
+     * @param brick the current brick view data
+     * @param ghostColorMapper function to map ghost color codes
+     */
     private void updateShadow(ViewData brick, Function<Integer, Paint> ghostColorMapper) {
         // Clear old shadow
         for (int i = 0; i < shadowRectangles.length; i++) {
@@ -123,6 +156,13 @@ public class BrickRenderer {
         }
     }
 
+    /**
+     * Refreshes the entire game board background display.
+     * Updates all cells with current board state.
+     *
+     * @param board the updated board matrix
+     * @param colorMapper function to map color codes to Paint objects
+     */
     public void refreshGameBackground(int[][] board, Function<Integer, Paint> colorMapper) {
         for (int i = 2; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {

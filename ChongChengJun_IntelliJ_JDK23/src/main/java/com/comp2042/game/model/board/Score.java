@@ -20,10 +20,20 @@ public final class Score {
         return linesCleared;
     }
 
+    /**
+     * Adds points to the current score.
+     *
+     * @param i the number of points to add
+     */
     public void add(int i) {
         score.setValue(score.getValue() + i);
     }
 
+    /**
+     * Adds cleared lines to the total count.
+     *
+     * @param lines the number of lines to add
+     */
     public void addLines(int lines) {
         linesCleared.setValue(linesCleared.getValue() + lines);
     }
@@ -32,6 +42,9 @@ public final class Score {
         return linesCleared.getValue();
     }
 
+    /**
+     * Resets score and lines cleared to zero.
+     */
     public void reset() {
         score.setValue(0);
         linesCleared.setValue(0);

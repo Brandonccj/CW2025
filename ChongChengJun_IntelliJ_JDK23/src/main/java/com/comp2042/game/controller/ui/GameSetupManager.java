@@ -21,6 +21,14 @@ public class GameSetupManager {
     private final Label levelLabel;
     private Label gameModeLabel;
 
+    /**
+     * Creates a new game setup manager with references to UI components.
+     *
+     * @param gamePanel the main game panel
+     * @param highScoreLabel the high score display label
+     * @param linesLabel the lines cleared display label
+     * @param levelLabel the level display label
+     */
     public GameSetupManager(GridPane gamePanel, Label highScoreLabel, Label linesLabel, Label levelLabel) {
         this.gamePanel = gamePanel;
         this.highScoreLabel = highScoreLabel;
@@ -29,7 +37,13 @@ public class GameSetupManager {
     }
 
     /**
-     * Sets up the game mode with appropriate styling, music, and UI configuration.
+     * Configures the game for the specified mode.
+     * Sets up styling, music playlist, and UI elements appropriate for the mode.
+     *
+     * @param mode the game mode to set up
+     * @param rootPane the root pane for applying mode-specific styling
+     * @param highScore the current high score value
+     * @param soundManager the sound manager for playing music
      */
     public void setupGameMode(GameMode mode, StackPane rootPane, int highScore, SoundManager soundManager) {
         if (mode == GameMode.ZEN) {
@@ -44,6 +58,13 @@ public class GameSetupManager {
         ((javafx.scene.layout.Pane) gamePanel.getParent()).getChildren().add(gameModeLabel);
     }
 
+    /**
+     * Configures UI and audio for Zen mode.
+     * Applies cyan color scheme and starts zen music playlist.
+     *
+     * @param rootPane the root pane for styling
+     * @param soundManager the sound manager for music
+     */
     private void setupZenMode(StackPane rootPane, SoundManager soundManager) {
         // Apply zen styling
         if (!rootPane.getStyleClass().contains("zen-mode")) {
@@ -73,6 +94,14 @@ public class GameSetupManager {
         gamePanel.setStyle("-fx-effect: dropshadow(gaussian, rgba(77, 208, 225, 0.3), 5, 0.5, 0, 0);");
     }
 
+    /**
+     * Configures UI and audio for Normal mode.
+     * Applies purple color scheme and starts normal music playlist.
+     *
+     * @param rootPane the root pane for styling
+     * @param highScore the high score to display
+     * @param soundManager the sound manager for music
+     */
     private void setupNormalMode(StackPane rootPane, int highScore, SoundManager soundManager) {
         // Remove zen styling if present
         rootPane.getStyleClass().remove("zen-mode");

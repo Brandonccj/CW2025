@@ -16,6 +16,14 @@ public class Main extends Application {
 
     private static Stage primaryStage;
 
+    /**
+     * Initializes and starts the JavaFX application.
+     * Loads custom fonts and displays the main menu scene.
+     *
+     * @param stage the primary stage for this application
+     * @throws Exception if FXML loading or font loading fails
+     */
+
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
@@ -30,6 +38,12 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+
+    /**
+     * Returns the primary stage of the application.
+     *
+     * @return the primary stage instance
+     */
     public static Stage getPrimaryStage() {
         return primaryStage;
     }

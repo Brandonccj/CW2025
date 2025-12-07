@@ -22,6 +22,10 @@ public class PauseMenu extends StackPane {
     private final Button mainMenuButton;
     private final Rectangle background;
 
+    /**
+     * Creates a new pause menu with resume, restart, and main menu buttons.
+     * Initializes UI components with default styling.
+     */
     public PauseMenu() {
         setPrefSize(350, 350);
         setMinSize(350, 350);
@@ -64,6 +68,12 @@ public class PauseMenu extends StackPane {
         setAlignment(Pos.CENTER);
     }
 
+    /**
+     * Updates the pause menu styling based on game mode.
+     * Changes border color to match mode theme.
+     *
+     * @param mode the current game mode
+     */
     public void setGameMode(GameMode mode) {
         if (mode == GameMode.ZEN) {
             background.setStroke(Color.rgb(77, 208, 225)); // Cyan (#4DD0E1)
